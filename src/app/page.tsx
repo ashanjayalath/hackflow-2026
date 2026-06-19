@@ -20,22 +20,27 @@ import {
   Portal,
   Select,
 } from '@chakra-ui/react';
-import { FiCalendar, FiMapPin, FiAward, FiCheckCircle, FiSun, FiMoon } from 'react-icons/fi';
+import { FiCalendar, FiMapPin, FiAward, FiCheckCircle, FiSun, FiMoon, FiMenu, FiX } from 'react-icons/fi';
 import { toaster } from "@/components/ui/toaster";
 
 export default function HackathonLandingPage() {
-  // Cute Light/Dark Theme State 
   const [isDarkMode, setIsDarkMode] = useState(true);
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  
+  // Hydration error එක මඟහරවා ගන්න flag එකක්
+  const [isMounted, setIsMounted] = useState(false);
 
-  // Countdown Timer States (Included Seconds now!)
-  const [timeLeft, setTimeLeft] = useState({ days: '08', hours: '14', minutes: '42', seconds: '00' });
+  // Countdown Timer States
+  const [timeLeft, setTimeLeft] = useState({ days: '00', hours: '00', minutes: '00', seconds: '00' });
 
   useEffect(() => {
-    // Dynamic countdown target simulation (8 days from now)
+    setIsMounted(true);
+    
+    // Target fixed countdown simulation (8 days from current context)
     const targetDate = new Date();
     targetDate.setDate(targetDate.getDate() + 8);
 
-    const timer = setInterval(() => {
+    const updateTimer = () => {
       const now = new Date().getTime();
       const difference = targetDate.getTime() - now;
 
@@ -55,7 +60,10 @@ export default function HackathonLandingPage() {
         minutes: String(m).padStart(2, '0'),
         seconds: String(s).padStart(2, '0'),
       });
-    }, 1000); // Trigger every 1 second
+    };
+
+    const timer = setInterval(updateTimer, 1000);
+    updateTimer(); // Initial call
 
     return () => clearInterval(timer);
   }, []);
@@ -79,7 +87,6 @@ export default function HackathonLandingPage() {
     });
   };
 
-  // Theme-driven styling adjustments
   const currentBg = isDarkMode ? "brand.bg" : "gray.50";
   const currentTextColor = isDarkMode ? "brand.onSurface" : "gray.900";
   const glassBg = isDarkMode ? "rgba(15, 23, 42, 0.6)" : "rgba(255, 255, 255, 0.7)";
@@ -102,37 +109,27 @@ export default function HackathonLandingPage() {
   });
 
   return (
-    <Box bg={currentBg} color={currentTextColor} minH="100vh" position="relative" transition="background 0.3s ease, color 0.3s ease">
+    <Box bg={currentBg} color={currentTextColor} minH="100vh" position="relative" transition="background 0.3s, color 0.3s">
       
-      {/* Top Navigation Bar - Enhanced Responsiveness */}
+      {/* --- TOP RESPONSIVE NAVBAR --- */}
       <Box
         as="nav"
         position="fixed"
         top="0"
         w="full"
         zIndex="50"
-        bg={isDarkMode ? "rgba(12, 19, 36, 0.8)" : "rgba(255, 255, 255, 0.8)"}
+        bg={isDarkMode ? "rgba(12, 19, 36, 0.85)" : "rgba(255, 255, 255, 0.85)"}
         backdropFilter="blur(20px)"
         borderBottom={`1px solid ${glassBorder}`}
         boxShadow={isDarkMode ? "0 0 20px rgba(76, 215, 246, 0.15)" : "0 2px 10px rgba(0,0,0,0.05)"}
-        h={{ base: "auto", md: "20" }}
-        py={{ base: "4", md: "0" }}
+        h="20"
       >
-        <Flex 
-          direction={{ base: 'column', sm: 'row' }}
-          justify="between" 
-          align="center" 
-          maxW="1440px" 
-          mx="auto" 
-          px="6" 
-          h="full"
-          gap={{ base: "4", sm: "0" }}
-        >
+        <Flex justify="between" align="center" maxW="1440px" mx="auto" px="6" h="full">
           <Text fontSize="24px" fontWeight="900" letterSpacing="tighter" color="brand.primary">
             HACKFLOW
           </Text>
 
-          {/* Hidden on mobile, flex on desktop */}
+          {/* Desktop Links */}
           <HStack gap="8" display={{ base: 'none', md: 'flex' }}>
             <Link href="#" color="brand.primary" fontWeight="bold" fontFamily="mono" fontSize="14px">Home</Link>
             <Link href="#guidelines" color={isDarkMode ? "brand.onSurfaceVariant" : "gray.600"} fontWeight="medium" fontFamily="mono" fontSize="14px" _hover={{ color: 'brand.primary' }}>Guidelines</Link>
@@ -140,24 +137,22 @@ export default function HackathonLandingPage() {
             <Link href="#register" color={isDarkMode ? "brand.onSurfaceVariant" : "gray.600"} fontWeight="medium" fontFamily="mono" fontSize="14px" _hover={{ color: 'brand.primary' }}>Register</Link>
           </HStack>
 
+          {/* Right Action Menu */}
           <HStack gap="4">
-            {/* Cute Light / Dark Option Switch Button */}
             <Button
               onClick={() => setIsDarkMode(!isDarkMode)}
               variant="ghost"
               borderRadius="full"
               w="10"
               h="10"
-              p="0"
               bg={isDarkMode ? "whiteAlpha.100" : "blackAlpha.100"}
-              _hover={{ bg: isDarkMode ? "whiteAlpha.200" : "blackAlpha.200", transform: "scale(1.1)" }}
-              transition="transform 0.2s"
-              title="Toggle Layout Vibe"
+              _hover={{ transform: "scale(1.1)" }}
             >
               <Icon as={isDarkMode ? FiSun : FiMoon} color={isDarkMode ? "yellow.400" : "purple.600"} w="5" h="5" />
             </Button>
 
             <Button
+              display={{ base: 'none', sm: 'inline-flex' }}
               bg="brand.primaryContainer"
               color="brand.onPrimaryContainer"
               borderRadius="full"
@@ -165,43 +160,56 @@ export default function HackathonLandingPage() {
               fontSize="12px"
               fontWeight="bold"
               fontFamily="mono"
-              _hover={{ boxShadow: '0 0 15px rgba(6, 182, 212, 0.5)' }}
               onClick={() => document.getElementById('register')?.scrollIntoView({ behavior: 'smooth' })}
             >
               JOIN NOW
             </Button>
+
+            {/* Mobile Menu Icon Toggle */}
+            <Button
+              display={{ base: 'flex', md: 'none' }}
+              onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+              variant="ghost"
+              w="10"
+              h="10"
+            >
+              <Icon as={isMobileMenuOpen ? FiX : FiMenu} w="6" h="6" />
+            </Button>
           </HStack>
         </Flex>
+
+        {/* Mobile Dropdown Menu Container */}
+        {isMobileMenuOpen && (
+          <Box display={{ md: 'none' }} bg={isDarkMode ? "brand.surfaceLow" : "white"} borderBottom={`1px solid ${glassBorder}`} px="6" py="4" position="absolute" top="20" left="0" w="full" zIndex="45">
+            <VStack gap="4" align="stretch">
+              <Link href="#" onClick={() => setIsMobileMenuOpen(false)} py="2">Home</Link>
+              <Link href="#guidelines" onClick={() => setIsMobileMenuOpen(false)} py="2">Guidelines</Link>
+              <Link href="#schedule" onClick={() => setIsMobileMenuOpen(false)} py="2">Schedule</Link>
+              <Link href="#register" onClick={() => setIsMobileMenuOpen(false)} py="2">Register</Link>
+              <Button
+                bg="brand.primaryContainer"
+                color="brand.onPrimaryContainer"
+                w="full"
+                onClick={() => { setIsMobileMenuOpen(false); document.getElementById('register')?.scrollIntoView({ behavior: 'smooth' }); }}
+              >
+                JOIN NOW
+              </Button>
+            </VStack>
+          </Box>
+        )}
       </Box>
 
-      {/* Main Content Area */}
-      <Box as="main" pt={{ base: "32", sm: "24", md: "20" }}>
+      {/* --- MAIN CONTENT AREA --- */}
+      <Box as="main" pt="20">
         
         {/* Hero Section */}
-        <Flex
-          position="relative"
-          minH="85vh"
-          align="center"
-          justify="center"
-          overflow="hidden"
-          px="6"
-        >
+        <Flex position="relative" minH="85vh" align="center" justify="center" overflow="hidden" px="6">
           {isDarkMode && <Box className="grid-overlay" position="absolute" inset="0" zIndex="1" pointerEvents="none" />}
           <Box position="absolute" top="50%" left="50%" transform="translate(-50%, -50%)" w="800px" h="800px" bg="rgba(76, 215, 246, 0.06)" filter="blur(120px)" borderRadius="full" zIndex="0" />
           
           <VStack gap="10" maxW="4xl" textAlign="center" zIndex="10">
             <VStack gap="4">
-              <Text
-                fontFamily="mono"
-                fontSize="12px"
-                fontWeight="700"
-                letterSpacing="widest"
-                color="brand.primary"
-                bg="rgba(76, 215, 246, 0.1)"
-                px="4"
-                py="1"
-                borderRadius="full"
-              >
+              <Text fontFamily="mono" fontSize="12px" fontWeight="700" letterSpacing="widest" color="brand.primary" bg="rgba(76, 215, 246, 0.1)" px="4" py="1" borderRadius="full">
                 2026 VIRTUAL HACKATHON
               </Text>
               <Heading as="h1" fontSize={{ base: '36px', sm: '48px', md: '64px' }} fontWeight="900" letterSpacing="-0.04em" lineHeight="1.1">
@@ -212,22 +220,24 @@ export default function HackathonLandingPage() {
               </Heading>
             </VStack>
 
-            {/* Countdown Widgets updated to 4 columns to fit SECONDS */}
+            {/* Countdown Widgets - Hydration Fixed via conditional render */}
             <SimpleGrid columns={{ base: 2, sm: 4 }} gap="4" w="full" maxW="lg" mx="auto">
               <VStack {...glassPanelStyles} p="4" gap="1">
-                <Text fontSize={{ base: "30px", md: "40px" }} fontWeight="700" color="brand.primary">{timeLeft.days}</Text>
+                <Text fontSize={{ base: "30px", md: "40px" }} fontWeight="700" color="brand.primary">{isMounted ? timeLeft.days : "00"}</Text>
                 <Text fontSize="10px" fontFamily="mono" opacity="0.6">DAYS</Text>
               </VStack>
               <VStack {...glassPanelStyles} p="4" gap="1">
-                <Text fontSize={{ base: "30px", md: "40px" }} fontWeight="700" color="brand.primary">{timeLeft.hours}</Text>
+                <Text fontSize={{ base: "30px", md: "40px" }} fontWeight="700" color="brand.primary">{isMounted ? timeLeft.hours : "00"}</Text>
                 <Text fontSize="10px" fontFamily="mono" opacity="0.6">HOURS</Text>
               </VStack>
               <VStack {...glassPanelStyles} p="4" gap="1">
-                <Text fontSize={{ base: "30px", md: "40px" }} fontWeight="700" color="brand.primary">{timeLeft.minutes}</Text>
+                <Text fontSize={{ base: "30px", md: "40px" }} fontWeight="700" color="brand.primary">{isMounted ? timeLeft.minutes : "00"}</Text>
                 <Text fontSize="10px" fontFamily="mono" opacity="0.6">MINUTES</Text>
               </VStack>
-              <VStack {...glassPanelStyles} p="4" gap="1" border="1px solid rgba(76, 215, 246, 0.3)" boxShadow="0 0 10px rgba(76, 215, 246, 0.1)">
-                <Text fontSize={{ base: "30px", md: "40px" }} fontWeight="700" bgGradient="linear(to-r, brand.primary, brand.secondary)" bgClip="text">{timeLeft.seconds}</Text>
+              <VStack {...glassPanelStyles} p="4" gap="1" border="1px solid rgba(76, 215, 246, 0.4)" boxShadow="0 0 15px rgba(76, 215, 246, 0.15)">
+                <Text fontSize={{ base: "30px", md: "40px" }} fontWeight="700" bgGradient="linear(to-r, brand.primary, brand.secondary)" bgClip="text">
+                  {isMounted ? timeLeft.seconds : "00"}
+                </Text>
                 <Text fontSize="10px" fontFamily="mono" color="brand.primary" fontWeight="bold">SECONDS</Text>
               </VStack>
             </SimpleGrid>
@@ -423,7 +433,7 @@ export default function HackathonLandingPage() {
                       color={isDarkMode ? "white" : "black"}
                       borderRadius="xl"
                       py="6"
-                      placeholder="University of Moratuwa"
+                      placeholder="ESOFT Metro College - Monaragala"
                       value={formData.institute}
                       onChange={(e) => setFormData({ ...formData, institute: e.target.value })}
                       _focus={{ borderColor: 'brand.primary' }}
