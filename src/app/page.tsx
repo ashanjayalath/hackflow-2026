@@ -27,7 +27,7 @@ export default function HackathonLandingPage() {
   const [isDarkMode, setIsDarkMode] = useState(true);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   
-  // Hydration error එක මඟහරවා ගන්න flag එකක්
+  // Hydration error මඟහරවා ගැනීමට සහ සර්වර් ටයිම් එක synchronize කිරීමට
   const [isMounted, setIsMounted] = useState(false);
 
   // Countdown Timer States
@@ -36,16 +36,34 @@ export default function HackathonLandingPage() {
   useEffect(() => {
     setIsMounted(true);
     
-    // Target fixed countdown simulation (8 days from current context)
-    const targetDate = new Date();
-    targetDate.setDate(targetDate.getDate() + 8);
+    // 1. තරඟාවලිය ආරම්භ වන නියමිත ස්ථාවර දිනය (2026/08/20)
+    const targetDate = new Date('2026-08-20T00:00:00').getTime();
+    
+    // පද්ධතිය ආරම්භයේදීම local pc time එක වෙනුවට නිල විශ්වසනීය Time API එකකින් සර්වර් ටයිම් එක ලබාගැනීම
+    let serverTimeOffset = 0;
+
+    async function fetchAccurateServerTime() {
+      try {
+        const response = await fetch('https://worldtimeapi.org/api/timezone/Asia/Colombo');
+        if (response.ok) {
+          const data = await response.json();
+          const actualNetworkTime = new Date(data.datetime).getTime();
+          // Local PC එකේ වෙලාව සහ සර්වර් එකේ සැබෑ වෙලාව අතර වෙනස ගණනය කිරීම
+          serverTimeOffset = actualNetworkTime - Date.now();
+        }
+      } catch (error) {
+        console.log("Network time API failed, using secure monotonic layout fallback.");
+      }
+    }
 
     const updateTimer = () => {
-      const now = new Date().getTime();
-      const difference = targetDate.getTime() - now;
+      // Local pc වෙලාවට වඩා සර්වර් නෙට්වර්ක් වෙලාව ආදේශ කිරීම
+      const currentSynchronizedTime = Date.now() + serverTimeOffset;
+      const difference = targetDate - currentSynchronizedTime;
 
       if (difference <= 0) {
         clearInterval(timer);
+        setTimeLeft({ days: '00', hours: '00', minutes: '00', seconds: '00' });
         return;
       }
 
@@ -62,8 +80,12 @@ export default function HackathonLandingPage() {
       });
     };
 
+    // ප්‍රථමයෙන්ම වෙලාව සක්‍රිය කර ටයිමරය තත්පරයෙන් තත්පරයට ධාවනය කිරීම
+    fetchAccurateServerTime().then(() => {
+      updateTimer();
+    });
+    
     const timer = setInterval(updateTimer, 1000);
-    updateTimer(); // Initial call
 
     return () => clearInterval(timer);
   }, []);
@@ -245,7 +267,7 @@ export default function HackathonLandingPage() {
                 <Text fontSize="10px" fontFamily="mono" opacity="0.6">MINUTES</Text>
               </VStack>
               <VStack {...glassPanelStyles} p="4" gap="1" border="1px solid rgba(76, 215, 246, 0.4)" boxShadow="0 0 15px rgba(76, 215, 246, 0.15)">
-                <Text fontSize={{ base: "30px", md: "40px" }} fontWeight="700" color="brand.primary">
+                <Text fontSize={{ base: "30px", md: "40px" }} fontWeight="700" bgGradient="linear(to-r, brand.primary, brand.secondary)" bgClip="text">
                   {isMounted ? timeLeft.seconds : "00"}
                 </Text>
                 <Text fontSize="10px" fontFamily="mono" color="brand.primary" fontWeight="bold">SECONDS</Text>
@@ -267,11 +289,10 @@ export default function HackathonLandingPage() {
                 REGISTER NOW
               </Button>
               
-              {/* Linked Generated Trilingual Handbook PDF directly here */}
               <Button
                 as="a"
-                // href="/hackflow_2026_handbook.pdf"
-                // download="HackFlow_2026_Handbook.pdf"
+                href="/hackflow_2026_handbook.pdf"
+                download="HackFlow_2026_Handbook.pdf"
                 size="lg"
                 variant="outline"
                 borderColor={isDarkMode ? "whiteAlpha.400" : "blackAlpha.400"}
@@ -512,7 +533,7 @@ export default function HackathonLandingPage() {
 
       {/* Footer */}
       <Box as="footer" bg={isDarkMode ? "brand.surfaceLow" : "gray.200"} borderTop={`1px solid ${glassBorder}`} py="8" w="full">
-        <Flex flexDir={{ base: 'column', md: 'row' }} justify="between" align="center" maxW="1440px" mx="auto" px="6" gap="4">
+        <Flex flexDir={{ base: 'column', md: 'row' }} justify="space-between" align="center" maxW="1440px" mx="auto" px="6" gap="4">
           <Text fontSize="16px" fontWeight="bold" color="brand.primary">ESOFT MONARAGALA — IT DEPT</Text>
           <Text fontSize="12px" fontFamily="mono" opacity="0.6">© 2026 HACKFLOW HACKATHON. ALL RIGHTS RESERVED.</Text>
         </Flex>
