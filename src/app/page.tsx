@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect } from 'react';
 import {
   Box,
   Flex,
@@ -23,6 +23,9 @@ import {
 } from '@chakra-ui/react';
 import { FiCalendar, FiMapPin, FiAward, FiSun, FiMoon, FiMenu, FiX, FiDownload } from 'react-icons/fi';
 import { toaster } from "@/components/ui/toaster";
+
+// ⚠️ ඔබ ලබාගත් Google Apps Script Web App URL එක මෙතැනට ඇතුළත් කරන්න
+const GOOGLE_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbzO2QOjfBfi3-HfLgCP9kPT-DDrDH-oUXnkgF64scCdJsPyyIuvze3E2exiWhnOEeHV8Q/exec";
 
 // Multi-language translation dictionaries
 const translations = {
@@ -71,8 +74,10 @@ const translations = {
     labelWhatsapp: "WHATSAPP NUMBER",
     labelExp: "EXPERIENCE LEVEL",
     btnSubmit: "SUBMIT REGISTRATION",
+    btnSubmitting: "SUBMITTING...",
     toastTitle: "Registration Submitted!",
-    toastDesc: "Thank you {name}, your spot for HackFlow 2026 has been secured successfully."
+    toastDesc: "Thank you {name}, your spot for HackFlow 2026 has been secured successfully.",
+    selectInstPlaceholder: "Select Your Institute"
   },
   si: {
     navHome: "මුල් පිටුව",
@@ -97,7 +102,7 @@ const translations = {
     bento2Title: "කැම්පස් සත්කාරකත්වය",
     bento2Desc: "එසොෆ්ට් මෙට්‍රෝ කොලේජ් මොනරාගල ශාඛාව — ස්මාර්ට් තාක්ෂණික පද්ධති ප්‍රවේශය.",
     bento3Label: "ප්‍රධාන මුදල් ත්‍යාගය",
-    bento3Desc: "විශිෂ්ඨතම නවෝත්පාදකයින් සහකාණ්ඩ ජයග්‍රාහකයින් අතර බෙදා හැරේ.",
+    bento3Desc: "විශිෂ්ඨතම නවෝත්පාදකයින් සහ කාණ්ඩ ජයග්‍රාහකයින් අතර බෙදා හැරේ.",
     bento4Num1: "500+", bento4Label1: "නිර්මාණකරුවන්",
     bento4Num2: "24h", bento4Label2: "උපදේශක සහාය",
     bento4Num3: "12", bento4Label3: "කර්මාන්ත විනිශ්චයකරුවන්",
@@ -119,8 +124,10 @@ const translations = {
     labelWhatsapp: "වට්ස්ඇප් අංකය",
     labelExp: "පළපුරුදු මට්ටම",
     btnSubmit: "ලියාපදිංචිය තහවුරු කරන්න",
+    btnSubmitting: "ලියාපදිංචි වෙමින් පවතී...",
     toastTitle: "ලියාපදිංචිය සාර්ථකයි!",
-    toastDesc: "ස්තූතියි {name}, HackFlow 2026 සඳහා ඔබේ අවස්ථාව සාර්ථකව වෙන් කර ගන්නා ලදී."
+    toastDesc: "ස්තූතියි {name}, HackFlow 2026 සඳහා ඔබේ අවස්ථාව සාර්ථකව වෙන් කර ගන්නා ලදී.",
+    selectInstPlaceholder: "ඔබේ ආයතනය තෝරන්න"
   },
   ta: {
     navHome: "முகப்பு",
@@ -143,7 +150,7 @@ const translations = {
     bento1Title: "அட்டவணை மற்றும் தளவாடங்கள்",
     bento1Desc: "மொனராகலை ஈசாப்ட் IT துறையினரின் விளக்கக்காட்சி. 48 மணிநேர UI மெய்நிகர் வடிவமைப்பு போட்டி.",
     bento2Title: "வளாக ஹோஸ்ட்",
-    bento2Desc: "ஈசாப்ட் மெட்ரோ கல்லூரி மொனராகலை கிளை — மெய்நிகர் தொழில்நுட்ப அணுகல்.",
+    bento2Desc: "ஈசாப்ட்評 மெட்ரோ கல்லூரி மொனராகலை கிளை — மெய்நிகர் தொழில்நுட்ப அணுகல்.",
     bento3Label: "பெருந்தொகை பரிசு",
     bento3Desc: "சிறந்த கண்டுபிடிப்பாளர்கள் மற்றும் வெற்றியாளர்களுக்கு விநியோகிக்கப்படும்.",
     bento4Num1: "500+", bento4Label1: "வடிவமைப்பாளர்கள்",
@@ -167,8 +174,10 @@ const translations = {
     labelWhatsapp: "வாட்ஸ்அப் எண்",
     labelExp: "அனுபவ நிலை",
     btnSubmit: "பதிவைச் சமர்ப்பிக்கவும்",
+    btnSubmitting: "சமர்ப்பிக்கப்படுகிறது...",
     toastTitle: "பதிவு வெற்றிகரமாக முடிந்தது!",
-    toastDesc: "நன்றி {name}, ஹேக்ஃப்ளோ 2026 க்கான உங்கள் இடம் வெற்றிகரமாக உறுதி செய்யப்பட்டுள்ளது."
+    toastDesc: "நன்றி {name}, ஹேக்ஃப்ளோ 2026 க்கான உங்கள் இடம் வெற்றிகரமாக உறுதி செய்யப்பட்டுள்ளது.",
+    selectInstPlaceholder: "உங்கள் நிறுவனத்தைத் தேர்ந்தெடுக்கவும்"
   }
 };
 
@@ -181,6 +190,10 @@ export default function HackathonLandingPage() {
   const [timeLeft, setTimeLeft] = useState({ days: '00', hours: '00', minutes: '00', seconds: '00' });
   const [pdfStringUrl, setPdfStringUrl] = useState<string>("");
   const [isLoading, setIsLoading] = useState(true);
+  const [isSubmitting, setIsSubmitting] = useState(false);
+
+  // Google Sheets Institutes State ລັອກ
+  const [institutesList, setInstitutesList] = useState<string[]>([]);
 
   // Custom Cursor Mouse Glow Coordinates State
   const [mousePos, setMousePos] = useState({ x: -100, y: -100 });
@@ -194,6 +207,20 @@ export default function HackathonLandingPage() {
     };
     window.addEventListener('mousemove', handleMouseMove);
     return () => window.removeEventListener('mousemove', handleMouseMove);
+  }, []);
+
+  // Fetch Institutes List from Google Sheet
+  useEffect(() => {
+    if (GOOGLE_SCRIPT_URL !== "https://script.google.com/macros/s/AKfycbzO2QOjfBfi3-HfLgCP9kPT-DDrDH-oUXnkgF64scCdJsPyyIuvze3E2exiWhnOEeHV8Q/exec") {
+      fetch(GOOGLE_SCRIPT_URL)
+        .then((res) => res.json())
+        .then((data) => {
+          if (data && data.institutes) {
+            setInstitutesList(data.institutes);
+          }
+        })
+        .catch((err) => console.error("Error fetching institutes from Google Sheet: ", err));
+    }
   }, []);
 
   useEffect(() => {
@@ -271,14 +298,65 @@ export default function HackathonLandingPage() {
     experience: 'Beginner',
   });
 
-  const handleRegisterSubmit = (e: React.FormEvent) => {
+  // Handle Form Submission into Google Sheet Endpoint API
+  const handleRegisterSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    toaster.create({
-      title: t.toastTitle,
-      description: t.toastDesc.replace('{name}', formData.fullName),
-      type: 'success',
-      duration: 5000
-    });
+    if (GOOGLE_SCRIPT_URL === "https://script.google.com/macros/s/AKfycbzO2QOjfBfi3-HfLgCP9kPT-DDrDH-oUXnkgF64scCdJsPyyIuvze3E2exiWhnOEeHV8Q/exec") {
+      toaster.create({
+        title: "Configuration Error",
+        description: "Please set your valid Google Apps Script Web App URL.",
+        type: 'error'
+      });
+      return;
+    }
+
+    if (!formData.institute) {
+      toaster.create({
+        title: currentLang === 'en' ? "Required Field" : "අනිවාර්ය ක්ෂේත්‍රයකි",
+        description: t.selectInstPlaceholder,
+        type: 'error'
+      });
+      return;
+    }
+
+    setIsSubmitting(true);
+
+    try {
+      const response = await fetch(GOOGLE_SCRIPT_URL, {
+        method: 'POST',
+        mode: 'no-cors', // CORS redirects bypass locking redirection handling
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(formData),
+      });
+
+      toaster.create({
+        title: t.toastTitle,
+        description: t.toastDesc.replace('{name}', formData.fullName),
+        type: 'success',
+        duration: 5000
+      });
+
+      // Clear Form on Success
+      setFormData({
+        fullName: '',
+        email: '',
+        institute: '',
+        whatsapp: '',
+        experience: 'Beginner',
+      });
+
+    } catch (error) {
+      console.error("Submission failed: ", error);
+      toaster.create({
+        title: "Submission Failed",
+        description: "Something went wrong. Please try again later.",
+        type: 'error'
+      });
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   const currentBg = isDarkMode ? "#060913" : "#f8fafc";
@@ -302,6 +380,11 @@ export default function HackathonLandingPage() {
       { label: "Intermediate", value: "Intermediate" },
       { label: "Pro", value: "Pro" },
     ],
+  });
+
+  // Dynamic Institutes Mapping Collection from Google Sheet State Array
+  const institutesCollection = createListCollection({
+    items: institutesList.map(inst => ({ label: inst, value: inst }))
   });
 
   // Native Intersection Observer Animation Hook Styles
@@ -695,20 +778,50 @@ export default function HackathonLandingPage() {
                     </Field.Root>
                   </SimpleGrid>
 
+                  {/* 🌟 UNIVERSITY / INSTITUTE SELECT COMPONENT (Sheet Integrated) */}
                   <Field.Root required>
                     <Field.Label fontSize="12px" fontFamily="'JetBrains Mono', monospace" opacity="0.6" fontWeight="bold" lineHeight="1.5">{t.labelInstitute}</Field.Label>
-                    <Input
-                      bg={isDarkMode ? "rgba(6, 9, 19, 0.5)" : "white"}
-                      border="1px solid"
-                      borderColor={glassBorder}
-                      color={isDarkMode ? "white" : "black"}
-                      borderRadius="xl"
-                      py="6"
-                      placeholder="ESOFT Metro College"
-                      value={formData.institute}
-                      onChange={(e) => setFormData({ ...formData, institute: e.target.value })}
-                      _focus={{ borderColor: '#06b6d4', boxShadow: "0 0 10px rgba(6, 182, 212, 0.2)" }}
-                    />
+                    <Select.Root 
+                      collection={institutesCollection} 
+                      size="md"
+                      value={formData.institute ? [formData.institute] : []}
+                      onValueChange={(details) => {
+                        if (details.value.length > 0) {
+                          setFormData({ ...formData, institute: details.value[0] });
+                        }
+                      }}
+                    >
+                      <Select.HiddenSelect name="institute" />
+                      <Select.Control>
+                        <Select.Trigger 
+                          bg={isDarkMode ? "rgba(6, 9, 19, 0.5)" : "white"}
+                          border="1px solid"
+                          borderColor={glassBorder}
+                          color={isDarkMode ? "white" : "black"}
+                          borderRadius="xl"
+                          h="50px"
+                          px="4"
+                          _focus={{ borderColor: '#06b6d4' }}
+                        >
+                          <Select.ValueText placeholder={t.selectInstPlaceholder} />
+                        </Select.Trigger>
+                        <Select.IndicatorGroup>
+                          <Select.Indicator color="#06b6d4" />
+                        </Select.IndicatorGroup>
+                      </Select.Control>
+                      <Portal>
+                        <Select.Positioner zIndex="60">
+                          <Select.Content bg={isDarkMode ? "#0a1020" : "white"} borderColor={glassBorder} borderRadius="xl" maxH="250px" overflowY="auto">
+                            {institutesCollection.items.map((inst) => (
+                              <Select.Item item={inst} key={inst.value} color={isDarkMode ? "white" : "black"} _hover={{ bg: "#06b6d4", color: "black" }} cursor="pointer" p="3" borderRadius="lg">
+                                {inst.label}
+                                <Select.ItemIndicator />
+                              </Select.Item>
+                            ))}
+                          </Select.Content>
+                        </Select.Positioner>
+                      </Portal>
+                    </Select.Root>
                   </Field.Root>
 
                   <SimpleGrid columns={{ base: 1, md: 2 }} gap="5" w="full">
@@ -774,8 +887,22 @@ export default function HackathonLandingPage() {
                     </Field.Root>
                   </SimpleGrid>
 
-                  <Button type="submit" w="full" py="7" mt="4" bgColor=" #06b6d4" color="white" fontWeight="bold" fontFamily="'JetBrains Mono', monospace" fontSize="12px" borderRadius="xl" lineHeight="1.2" _hover={{ boxShadow: '0 0 30px rgba(6, 182, 212, 0.5)', transform: "translateY(-1px)" }}>
-                    {t.btnSubmit}
+                  <Button 
+                    type="submit" 
+                    w="full" 
+                    py="7" 
+                    mt="4" 
+                    bgColor="#06b6d4" 
+                    color="white" 
+                    fontWeight="bold" 
+                    fontFamily="'JetBrains Mono', monospace" 
+                    fontSize="12px" 
+                    borderRadius="xl" 
+                    lineHeight="1.2" 
+                    disabled={isSubmitting}
+                    _hover={{ boxShadow: '0 0 30px rgba(6, 182, 212, 0.5)', transform: "translateY(-1px)" }}
+                  >
+                    {isSubmitting ? t.btnSubmitting : t.btnSubmit}
                   </Button>
                 </VStack>
               </form>
