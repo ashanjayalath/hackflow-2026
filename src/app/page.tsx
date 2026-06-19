@@ -21,26 +21,173 @@ import {
   Select,
   DownloadTrigger,
 } from '@chakra-ui/react';
-import { FiCalendar, FiMapPin, FiAward, FiCheckCircle, FiSun, FiMoon, FiMenu, FiX, FiDownload } from 'react-icons/fi';
+import { FiCalendar, FiMapPin, FiAward, FiCheckCircle, FiSun, FiMoon, FiMenu, FiX, FiDownload, FiGlobe } from 'react-icons/fi';
 import { toaster } from "@/components/ui/toaster";
+
+// Multi-language translation dictionaries
+const translations = {
+  en: {
+    navHome: "Home",
+    navGuidelines: "Guidelines",
+    navSchedule: "Schedule",
+    navRegister: "Register",
+    joinNow: "JOIN NOW",
+    virtualHack: "2026 VIRTUAL HACKATHON",
+    organizedBy: "ORGANIZED BY IT DEPARTMENT — ESOFT METRO COLLEGE MONARAGALA",
+    heroTitle1: "Design Tomorrow:",
+    heroTitle2: "Canvas of Flows",
+    days: "DAYS",
+    hours: "HOURS",
+    minutes: "MINUTES",
+    seconds: "SECONDS",
+    regNow: "REGISTER NOW",
+    viewGuide: "DOWNLOAD HANDBOOK (EN/SI/TA)",
+    loading: "LOADING HANDBOOK...",
+    eventOverview: "Event Overview",
+    bento1Title: "Schedule & Logistics",
+    bento1Desc: "Presented by ESOFT Monaragala IT Department. A 48-hour virtual breakdown of front-end UI creativity synced directly into functional state cycles.",
+    bento2Title: "Campus Host",
+    bento2Desc: "ESOFT Metro College Monaragala Branch — Smart Virtual Tech Suite Access.",
+    bento3Label: "GRAND PRIZE",
+    bento3Desc: "Distributed among Top Innovators and Category Winners.",
+    bento4Num1: "500+", bento4Label1: "DESIGNERS",
+    bento4Num2: "24h", bento4Label2: "MENTOR SUPPORT",
+    bento4Num3: "12", bento4Label3: "INDUSTRY JUDGES",
+    bento4Num4: "VIRTUAL", bento4Label4: "GLOBAL ACCESS",
+    bento5Label: "// CORE TRACKS",
+    bento5Title: "UI Evolution &\nSystem Flows",
+    challengeLabel: "THE CHALLENGE",
+    challengeTitle: "Where Aesthetics Meets Logic",
+    challengeDesc: "HackFlow asks you to bridge the gap between static canvas beauty and functional flow architecture. Using Canva's library, you'll build responsive UI interfaces that execute complex data states mapped on Google Flow.",
+    timeline1Date: "OCTOBER 15",
+    timeline1Title: "Submission Opens",
+    timeline2Date: "OCTOBER 24",
+    timeline2Title: "Flow Workshop",
+    formTitle: "Secure Your Spot",
+    formDesc: "Registered data will route directly to ESOFT Monaragala IT Academic Desk.",
+    labelName: "FULL NAME",
+    labelEmail: "EMAIL ADDRESS",
+    labelInstitute: "UNIVERSITY / INSTITUTE / SCHOOL",
+    labelWhatsapp: "WHATSAPP NUMBER",
+    labelExp: "EXPERIENCE LEVEL",
+    btnSubmit: "SUBMIT REGISTRATION",
+    toastTitle: "Registration Submitted!",
+    toastDesc: "Thank you {name}, your spot for HackFlow 2026 has been secured successfully."
+  },
+  si: {
+    navHome: "මුල් පිටුව",
+    navGuidelines: "නියමාවලිය",
+    navSchedule: "කාලසටහන",
+    navRegister: "ලියාපදිංචිය",
+    joinNow: "දැන්ම එකතු වන්න",
+    virtualHack: "2026 සබැඳි හැකතෝන්",
+    organizedBy: "තොරතුරු තාක්ෂණ දෙපාර්තමේන්තුව — එසොෆ්ට් මෙට්‍රෝ කොලේජ් මොනරාගල මඟින් සංවිධානය කරයි",
+    heroTitle1: "හෙට දවස සැලසුම් කරන්න:",
+    heroTitle2: "කැන්වස් ඔෆ් ෆ්ලෝස්",
+    days: "දින",
+    hours: "පැය",
+    minutes: "විනාඩි",
+    seconds: "තත්පර",
+    regNow: "දැන්ම ලියාපදිංචි වන්න",
+    viewGuide: "විස්තර පොත බාගත කරන්න (EN/SI/TA)",
+    loading: "බාගත වෙමින් පවතී...",
+    eventOverview: "තරඟාවලි දළ විශ්ලේෂණය",
+    bento1Title: "කාලසටහන සහ සංවිධාන කටයුතු",
+    bento1Desc: "මොනරාගල ESOFT IT දෙපාර්තමේන්තුව ඉදිරිපත් කරන පැය 48ක අඛණ්ඩ UI නිර්මාණශීලී තාක්ෂණික එකතුවකි.",
+    bento2Title: "කැම්පස් සත්කාරකත්වය",
+    bento2Desc: "එසොෆ්ට් මෙට්‍රෝ කොලේජ් මොනරාගල ශාඛාව — ස්මාර්ට් තාක්ෂණික පද්ධති ප්‍රවේශය.",
+    bento3Label: "ප්‍රධාන මුදල් ත්‍යාගය",
+    bento3Desc: "විශිෂ්ඨතම නවෝත්පාදකයින් සහ කාණ්ඩ ජයග්‍රාහකයින් අතර බෙදා හැරේ.",
+    bento4Num1: "500+", bento4Label1: "නිර්මාණකරුවන්",
+    bento4Num2: "24h", bento4Label2: "උපදේශක සහාය",
+    bento4Num3: "12", bento4Label3: "කර්මාන්ත විනිශ්චයකරුවන්",
+    bento4Num4: "සබැඳි", bento4Label4: "ගෝලීය ප්‍රවේශය",
+    bento5Label: "// ප්‍රධාන අංශ",
+    bento5Title: "UI පරිණාමය සහ\nපද්ධති ගලායාම",
+    challengeLabel: "තාක්ෂණික අභියෝගය",
+    challengeTitle: "කලාව සහ තර්කනය හමුවන තැන",
+    challengeDesc: "Canva මෙවලම් භාවිතයෙන් උසස් තත්වයේ දෘශ්‍ය අතුරුමුහුණත් (UI) නිර්මාණය කර, ඒවා Google Flow තාක්ෂණය හරහා සජීවී දත්ත චක්‍රයන් සමඟ සාර්ථකව සම්බන්ධ කිරීම මෙහි ප්‍රධාන අභියෝගයයි.",
+    timeline1Date: "ඔක්තෝබර් 15",
+    timeline1Title: "නිර්මාණ භාරදීම ඇරඹේ",
+    timeline2Date: "ඔක්තෝබර් 24",
+    timeline2Title: "සජීවී තාක්ෂණික වැඩමුළුව",
+    formTitle: "ඔබේ ස්ථානය වෙන්කරවා ගන්න",
+    formDesc: "ලියාපදිංචි වන දත්ත සෘජුවම ESOFT මොනරාගල IT අධ්‍යයන අංශය වෙත යොමු කෙරේ.",
+    labelName: "සම්පූර්ණ නම",
+    labelEmail: "විද්‍යුත් තැපෑල",
+    labelInstitute: "විශ්වවිද්‍යාලය / ආයතනය / පාසල",
+    labelWhatsapp: "වට්ස්ඇප් අංකය",
+    labelExp: "පළපුරුදු මට්ටම",
+    btnSubmit: "ලියාපදිංචිය තහවුරු කරන්න",
+    toastTitle: "ලියාපදිංචිය සාර්ථකයි!",
+    toastDesc: "ස්තූතියි {name}, HackFlow 2026 සඳහා ඔබේ අවස්ථාව සාර්ථකව වෙන් කර ගන්නා ලදී."
+  },
+  ta: {
+    navHome: "முகப்பு",
+    navGuidelines: "வழிகாட்டுதல்கள்",
+    navSchedule: "அட்டவணை",
+    navRegister: "பதிவு",
+    joinNow: "இப்போது இணையுங்கள்",
+    virtualHack: "2026 மெய்நிகர் ஹேக்கத்தான்",
+    organizedBy: "தகவல் தொழில்நுட்பத் துறை — ஈசாப்ட் மெட்ரோ கல்லூரி மொனராகலை ஏற்பாடு செய்துள்ளது",
+    heroTitle1: "நாளையை வடிவமைக்கவும்:",
+    heroTitle2: "கேன்வாஸ் ஆஃப் ப்ளோஸ்",
+    days: "நாட்கள்",
+    hours: "மணிகள்",
+    minutes: "நிமிடங்கள்",
+    seconds: "விநாடிகள்",
+    regNow: "இப்போது பதிவு செய்க",
+    viewGuide: "கையேட்டைப் பதிவிறக்கவும் (EN/SI/TA)",
+    loading: "பதிவிறக்கப் படுகிறது...",
+    eventOverview: "நிகழ்ச்சி மேலோட்டம்",
+    bento1Title: "அட்டவணை மற்றும் தளவாடங்கள்",
+    bento1Desc: "மொனராகலை ஈசாப்ட் IT துறையினரின் விளக்கக்காட்சி. 48 மணிநேர UI மெய்நிகர் வடிவமைப்பு போட்டி.",
+    bento2Title: "வளாக ஹோஸ்ட்",
+    bento2Desc: "ஈசாப்ட் மெட்ரோ கல்லூரி மொனராகலை கிளை — மெய்நிகர் தொழில்நுட்ப அணுகல்.",
+    bento3Label: "பெருந்தொகை பரிசு",
+    bento3Desc: "சிறந்த கண்டுபிடிப்பாளர்கள் மற்றும் வெற்றியாளர்களுக்கு விநியோகிக்கப்படும்.",
+    bento4Num1: "500+", bento4Label1: "வடிவமைப்பாளர்கள்",
+    bento4Num2: "24h", bento4Label2: "ஆலோசகர் ஆதரவு",
+    bento4Num3: "12", bento4Label3: "தொழில் துறை நடுவர்கள்",
+    bento4Num4: "மெய்நிகர்", bento4Label4: "உலகளாவிய அணுகல்",
+    bento5Label: "// முக்கிய தடங்கள்",
+    bento5Title: "UI பரிணாமம் மற்றும்\nஅமைப்பு ஓட்டங்கள்",
+    challengeLabel: "சவால்",
+    challengeTitle: "அழகியல் தர்க்கத்தை சந்திக்கும் இடம்",
+    challengeDesc: "Canva இன் காட்சி கூறுகளைப் பயன்படுத்தி உயர்தர இடைமுகங்களை உருவாக்கி, அவற்றை Google Flow அமைப்புகளுக்குள் தரவு சுழற்சிகளுடன் இணைப்பதே இப்போட்டியின் முக்கிய சவாலாகும்.",
+    timeline1Date: "அக்டோபர் 15",
+    timeline1Title: "சமர்ப்பிப்பு ஆரம்பம்",
+    timeline2Date: "அக்டோபர் 24",
+    timeline2Title: "தொழில்நுட்பப் பட்டறை",
+    formTitle: "உங்கள் இடத்தை உறுதிப்படுத்துங்கள்",
+    formDesc: "பதிவுசெய்யப்பட்ட தரவு நேரடியாக ஈசாப்ட் மொனராகலை IT கல்விப் பிரிவுக்கு அனுப்பப்படும்.",
+    labelName: "முழு பெயர்",
+    labelEmail: "மின்னஞ்சல் முகவரி",
+    labelInstitute: "பல்கலைக்கழகம் / நிறுவனம் / பள்ளி",
+    labelWhatsapp: "வாட்ஸ்அப் எண்",
+    labelExp: "அனுபவ நிலை",
+    btnSubmit: "பதிவைச் சமர்ப்பிக்கவும்",
+    toastTitle: "பதிவு வெற்றிகரமாக முடிந்தது!",
+    toastDesc: "நன்றி {name}, ஹேக்ஃப்ளோ 2026 க்கான உங்கள் இடம் வெற்றிகரமாக உறுதி செய்யப்பட்டுள்ளது."
+  }
+};
 
 export default function HackathonLandingPage() {
   const [isDarkMode, setIsDarkMode] = useState(true);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const [currentLang, setCurrentLang] = useState<'en' | 'si' | 'ta'>('en');
   
-  // Hydration error මඟහරවා ගැනීමට සහ සර්වර් ටයිම් එක synchronize කිරීමට
   const [isMounted, setIsMounted] = useState(false);
-
-  // Countdown Timer States
   const [timeLeft, setTimeLeft] = useState({ days: '00', hours: '00', minutes: '00', seconds: '00' });
   const [pdfStringUrl, setPdfStringUrl] = useState<string>("");
   const [isLoading, setIsLoading] = useState(true);
+
+  const t = translations[currentLang];
 
   useEffect(() => {
     fetch('/hackflow_2026_handbook.pdf')
       .then((res) => res.blob())
       .then((blob) => {
-        // Blob එකෙන් String data URL එකක් සාදා ගැනීම (Chakra compatible)
         const reader = new FileReader();
         reader.onloadend = () => {
           setPdfStringUrl(reader.result as string);
@@ -56,11 +203,7 @@ export default function HackathonLandingPage() {
 
   useEffect(() => {
     setIsMounted(true);
-    
-    // 1. තරඟාවලිය ආරම්භ වන නියමිත ස්ථාවර දිනය (2026/08/20)
     const targetDate = new Date('2026-08-20T00:00:00').getTime();
-    
-    // පද්ධතිය ආරම්භයේදීම local pc time එක වෙනුවට නිල විශ්වසනීය Time API එකකින් සර්වර් ටයිම් එක ලබාගැනීම
     let serverTimeOffset = 0;
 
     async function fetchAccurateServerTime() {
@@ -69,7 +212,6 @@ export default function HackathonLandingPage() {
         if (response.ok) {
           const data = await response.json();
           const actualNetworkTime = new Date(data.datetime).getTime();
-          // Local PC එකේ වෙලාව සහ සර්වර් එකේ සැබෑ වෙලාව අතර වෙනස ගණනය කිරීම
           serverTimeOffset = actualNetworkTime - Date.now();
         }
       } catch (error) {
@@ -78,7 +220,6 @@ export default function HackathonLandingPage() {
     }
 
     const updateTimer = () => {
-      // Local pc වෙලාවට වඩා සර්වර් නෙට්වර්ක් වෙලාව ආදේශ කිරීම
       const currentSynchronizedTime = Date.now() + serverTimeOffset;
       const difference = targetDate - currentSynchronizedTime;
 
@@ -101,13 +242,11 @@ export default function HackathonLandingPage() {
       });
     };
 
-    // ප්‍රථමයෙන්ම වෙලාව සක්‍රිය කර ටයිමරය තත්පරයෙන් තත්පරයට ධාවනය කිරීම
     fetchAccurateServerTime().then(() => {
       updateTimer();
     });
     
     const timer = setInterval(updateTimer, 1000);
-
     return () => clearInterval(timer);
   }, []);
 
@@ -123,8 +262,8 @@ export default function HackathonLandingPage() {
   const handleRegisterSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     toaster.create({
-      title: 'Registration Submitted!',
-      description: `Thank you ${formData.fullName}, your spot for HackFlow 2026 has been secured successfully.`,
+      title: t.toastTitle,
+      description: t.toastDesc.replace('{name}', formData.fullName),
       type: 'success',
       duration: 5000
     });
@@ -177,16 +316,23 @@ export default function HackathonLandingPage() {
             </Text>
           </VStack>
 
-          {/* Desktop Links */}
+          {/* Desktop Links (Localized) */}
           <HStack gap="8" display={{ base: 'none', md: 'flex' }}>
-            <Link href="#" color="brand.primary" fontWeight="bold" fontFamily="mono" fontSize="14px">Home</Link>
-            <Link href="#guidelines" color={isDarkMode ? "brand.onSurfaceVariant" : "gray.600"} fontWeight="medium" fontFamily="mono" fontSize="14px" _hover={{ color: 'brand.primary' }}>Guidelines</Link>
-            <Link href="#schedule" color={isDarkMode ? "brand.onSurfaceVariant" : "gray.600"} fontWeight="medium" fontFamily="mono" fontSize="14px" _hover={{ color: 'brand.primary' }}>Schedule</Link>
-            <Link href="#register" color={isDarkMode ? "brand.onSurfaceVariant" : "gray.600"} fontWeight="medium" fontFamily="mono" fontSize="14px" _hover={{ color: 'brand.primary' }}>Register</Link>
+            <Link href="#" color="brand.primary" fontWeight="bold" fontFamily="mono" fontSize="14px">{t.navHome}</Link>
+            <Link href="#guidelines" color={isDarkMode ? "brand.onSurfaceVariant" : "gray.600"} fontWeight="medium" fontFamily="mono" fontSize="14px" _hover={{ color: 'brand.primary' }}>{t.navGuidelines}</Link>
+            <Link href="#schedule" color={isDarkMode ? "brand.onSurfaceVariant" : "gray.600"} fontWeight="medium" fontFamily="mono" fontSize="14px" _hover={{ color: 'brand.primary' }}>{t.navSchedule}</Link>
+            <Link href="#register" color={isDarkMode ? "brand.onSurfaceVariant" : "gray.600"} fontWeight="medium" fontFamily="mono" fontSize="14px" _hover={{ color: 'brand.primary' }}>{t.navRegister}</Link>
           </HStack>
 
-          {/* Right Action Menu */}
+          {/* Right Action Menu with Multi-Language Switcher */}
           <HStack gap="4">
+            {/* Elegant Language Selector Switcher */}
+            <HStack bg={isDarkMode ? "whiteAlpha.100" : "blackAlpha.100"} p="1" borderRadius="full" gap="1">
+              <Button size="xs" variant={currentLang === 'en' ? 'solid' : 'ghost'} bg={currentLang === 'en' ? 'brand.primary' : 'transparent'} color={currentLang === 'en' ? 'black' : currentTextColor} borderRadius="full" onClick={() => setCurrentLang('en')}>EN</Button>
+              <Button size="xs" variant={currentLang === 'si' ? 'solid' : 'ghost'} bg={currentLang === 'si' ? 'brand.primary' : 'transparent'} color={currentLang === 'si' ? 'black' : currentTextColor} borderRadius="full" onClick={() => setCurrentLang('si')}>සිං</Button>
+              <Button size="xs" variant={currentLang === 'ta' ? 'solid' : 'ghost'} bg={currentLang === 'ta' ? 'brand.primary' : 'transparent'} color={currentLang === 'ta' ? 'black' : currentTextColor} borderRadius="full" onClick={() => setCurrentLang('ta')}>தம</Button>
+            </HStack>
+
             <Button
               onClick={() => setIsDarkMode(!isDarkMode)}
               variant="ghost"
@@ -210,7 +356,7 @@ export default function HackathonLandingPage() {
               fontFamily="mono"
               onClick={() => document.getElementById('register')?.scrollIntoView({ behavior: 'smooth' })}
             >
-              JOIN NOW
+              {t.joinNow}
             </Button>
 
             {/* Mobile Menu Icon Toggle */}
@@ -230,17 +376,17 @@ export default function HackathonLandingPage() {
         {isMobileMenuOpen && (
           <Box display={{ md: 'none' }} bg={isDarkMode ? "brand.surfaceLow" : "white"} borderBottom={`1px solid ${glassBorder}`} px="6" py="4" position="absolute" top="20" left="0" w="full" zIndex="45">
             <VStack gap="4" align="stretch">
-              <Link href="#" onClick={() => setIsMobileMenuOpen(false)} py="2">Home</Link>
-              <Link href="#guidelines" onClick={() => setIsMobileMenuOpen(false)} py="2">Guidelines</Link>
-              <Link href="#schedule" onClick={() => setIsMobileMenuOpen(false)} py="2">Schedule</Link>
-              <Link href="#register" onClick={() => setIsMobileMenuOpen(false)} py="2">Register</Link>
+              <Link href="#" onClick={() => setIsMobileMenuOpen(false)} py="2">{t.navHome}</Link>
+              <Link href="#guidelines" onClick={() => setIsMobileMenuOpen(false)} py="2">{t.navGuidelines}</Link>
+              <Link href="#schedule" onClick={() => setIsMobileMenuOpen(false)} py="2">{t.navSchedule}</Link>
+              <Link href="#register" onClick={() => setIsMobileMenuOpen(false)} py="2">{t.navRegister}</Link>
               <Button
                 bg="brand.primaryContainer"
                 color="brand.onPrimaryContainer"
                 w="full"
                 onClick={() => { setIsMobileMenuOpen(false); document.getElementById('register')?.scrollIntoView({ behavior: 'smooth' }); }}
               >
-                JOIN NOW
+                {t.joinNow}
               </Button>
             </VStack>
           </Box>
@@ -259,16 +405,16 @@ export default function HackathonLandingPage() {
             <VStack gap="4">
               <VStack gap="1">
                 <Text fontFamily="mono" fontSize="12px" fontWeight="700" letterSpacing="widest" color="brand.primary" bg="rgba(76, 215, 246, 0.1)" px="4" py="1" borderRadius="full">
-                  2026 VIRTUAL HACKATHON
+                  {t.virtualHack}
                 </Text>
                 <Text fontSize="11px" fontWeight="bold" letterSpacing="wider" opacity="0.8" color="brand.secondary">
-                  ORGANIZED BY IT DEPARTMENT — ESOFT METRO COLLEGE MONARAGALA
+                  {t.organizedBy}
                 </Text>
               </VStack>
               <Heading as="h1" fontSize={{ base: '36px', sm: '48px', md: '64px' }} fontWeight="900" letterSpacing="-0.04em" lineHeight="1.1">
-                Design Tomorrow:<br />
+                {t.heroTitle1}<br />
                 <Text as="span" bgGradient="linear(to-r, brand.primary, brand.secondary)" bgClip="text">
-                  Canvas of Flows
+                  {t.heroTitle2}
                 </Text>
               </Heading>
             </VStack>
@@ -277,21 +423,21 @@ export default function HackathonLandingPage() {
             <SimpleGrid columns={{ base: 2, sm: 4 }} gap="4" w="full" maxW="lg" mx="auto">
               <VStack {...glassPanelStyles} p="4" gap="1">
                 <Text fontSize={{ base: "30px", md: "40px" }} fontWeight="700" color="brand.primary">{isMounted ? timeLeft.days : "00"}</Text>
-                <Text fontSize="10px" fontFamily="mono" opacity="0.6">DAYS</Text>
+                <Text fontSize="10px" fontFamily="mono" opacity="0.6">{t.days}</Text>
               </VStack>
               <VStack {...glassPanelStyles} p="4" gap="1">
                 <Text fontSize={{ base: "30px", md: "40px" }} fontWeight="700" color="brand.primary">{isMounted ? timeLeft.hours : "00"}</Text>
-                <Text fontSize="10px" fontFamily="mono" opacity="0.6">HOURS</Text>
+                <Text fontSize="10px" fontFamily="mono" opacity="0.6">{t.hours}</Text>
               </VStack>
               <VStack {...glassPanelStyles} p="4" gap="1">
                 <Text fontSize={{ base: "30px", md: "40px" }} fontWeight="700" color="brand.primary">{isMounted ? timeLeft.minutes : "00"}</Text>
-                <Text fontSize="10px" fontFamily="mono" opacity="0.6">MINUTES</Text>
+                <Text fontSize="10px" fontFamily="mono" opacity="0.6">{t.minutes}</Text>
               </VStack>
               <VStack {...glassPanelStyles} p="4" gap="1" border="1px solid rgba(76, 215, 246, 0.4)" boxShadow="0 0 15px rgba(76, 215, 246, 0.15)">
                 <Text fontSize={{ base: "30px", md: "40px" }} fontWeight="700" color="brand.primary">
                   {isMounted ? timeLeft.seconds : "00"}
                 </Text>
-                <Text fontSize="10px" fontFamily="mono" color="brand.primary" fontWeight="bold">SECONDS</Text>
+                <Text fontSize="10px" fontFamily="mono" color="brand.primary" fontWeight="bold">{t.seconds}</Text>
               </VStack>
             </SimpleGrid>
 
@@ -307,7 +453,7 @@ export default function HackathonLandingPage() {
                 _hover={{ boxShadow: '0 0 50px rgba(6, 182, 212, 0.6)' }}
                 onClick={() => document.getElementById('register')?.scrollIntoView({ behavior: 'smooth' })}
               >
-                REGISTER NOW
+                {t.regNow}
               </Button>
               
               <DownloadTrigger
@@ -316,20 +462,20 @@ export default function HackathonLandingPage() {
                 mimeType="application/pdf"
                 asChild
               >
-      <Button
-        size="lg"
-        variant="outline"
-        disabled={isLoading || !pdfStringUrl}
-        borderColor="whiteAlpha.400"
-        borderRadius="full"
-        color={isDarkMode ? "brand.onSurfaceVariant" : "gray.600"}
-        px="10"
-        fontSize="12px"
-        _hover={{ borderColor: 'brand.primary', bg: 'rgba(76, 215, 246, 0.1)' }}
-      >
-        <Icon as={FiDownload} /> {isLoading ? "LOADING HANDBOOK..." : "DOWNLOAD HANDBOOK (EN/SI/TA)"}
-      </Button>
-    </DownloadTrigger>
+                <Button
+                  size="lg"
+                  variant="outline"
+                  disabled={isLoading || !pdfStringUrl}
+                  borderColor="whiteAlpha.400"
+                  borderRadius="full"
+                  color={isDarkMode ? "brand.onSurfaceVariant" : "gray.600"}
+                  px="10"
+                  fontSize="12px"
+                  _hover={{ borderColor: 'brand.primary', bg: 'rgba(76, 215, 246, 0.1)' }}
+                >
+                  <Icon as={FiDownload} /> {isLoading ? t.loading : t.viewGuide}
+                </Button>
+              </DownloadTrigger>
             </Flex>
           </VStack>
         </Flex>
@@ -337,7 +483,7 @@ export default function HackathonLandingPage() {
         {/* Bento Grid Event Overview */}
         <Box py="20" px="6" maxW="1440px" mx="auto" id="guidelines">
           <Box mb="10">
-            <Heading as="h2" fontSize="40px" mb="2">Event Overview</Heading>
+            <Heading as="h2" fontSize="40px" mb="2">{t.eventOverview}</Heading>
             <Box w="20" h="1" bg="brand.primary" borderRadius="full" />
           </Box>
 
@@ -345,8 +491,8 @@ export default function HackathonLandingPage() {
             <GridItem colSpan={{ base: 1, md: 2 }} {...glassPanelStyles} display="flex" flexDir="column" style={{ justifyContent: 'space-between' }} gap="6" _hover={{ borderColor: 'rgba(76, 215, 246, 0.3)' }} transition="all 0.3s">
               <Icon as={FiCalendar} color="brand.primary" w="10" h="10" />
               <VStack align="start" gap="2">
-                <Heading as="h3" fontSize="24px">Schedule & Logistics</Heading>
-                <Text color={isDarkMode ? "brand.onSurfaceVariant" : "gray.600"}>Presented by ESOFT Monaragala IT Department. A 48-hour virtual breakdown of front-end UI creativity synced directly into functional state cycles.</Text>
+                <Heading as="h3" fontSize="24px">{t.bento1Title}</Heading>
+                <Text color={isDarkMode ? "brand.onSurfaceVariant" : "gray.600"}>{t.bento1Desc}</Text>
               </VStack>
             </GridItem>
 
@@ -356,45 +502,45 @@ export default function HackathonLandingPage() {
                   <Icon as={FiMapPin} color="brand.secondary" w="6" h="6" />
                 </Flex>
               </HStack>
-              <Text fontFamily="mono" fontSize="12px" fontWeight="bold">Campus Host</Text>
-              <Text color={isDarkMode ? "brand.onSurfaceVariant" : "gray.600"}>ESOFT Metro College Monaragala Branch — Smart Virtual Tech Suite Access.</Text>
+              <Text fontFamily="mono" fontSize="12px" fontWeight="bold">{t.bento2Title}</Text>
+              <Text color={isDarkMode ? "brand.onSurfaceVariant" : "gray.600"}>{t.bento2Desc}</Text>
             </GridItem>
 
             <GridItem colSpan={1} rowSpan={{ base: 1, md: 2 }} className="glow-border" borderRadius="2xl" overflow="hidden">
               <Flex {...glassPanelStyles} h="full" w="full" flexDir="column" align="center" justify="center" textAlign="center" gap="4">
                 <Icon as={FiAward} color="yellow.400" w="14" h="14" mb="4" />
                 <Box>
-                  <Text fontFamily="mono" fontSize="12px" color="brand.primary" letterSpacing="widest">TOTAL REWARDS</Text>
-                  <Text fontSize="48px" fontWeight="900" bgGradient="linear(to-br, brand.primary, brand.secondary)" bgClip="text">$15,000</Text>
+                  <Text fontFamily="mono" fontSize="12px" color="brand.primary" letterSpacing="widest">{t.bento3Label}</Text>
+                  <Text fontSize="32px" fontWeight="900" bgGradient="linear(to-br, brand.primary, brand.secondary)" bgClip="text">Rs. 25,000</Text>
                 </Box>
-                <Text color={isDarkMode ? "brand.onSurfaceVariant" : "gray.600"} fontSize="sm" mt="2">Distributed among Top Innovators and Category Winners.</Text>
+                <Text color={isDarkMode ? "brand.onSurfaceVariant" : "gray.600"} fontSize="sm" mt="2">{t.bento3Desc}</Text>
               </Flex>
             </GridItem>
 
             <GridItem colSpan={{ base: 1, md: 2 }} {...glassPanelStyles}>
               <SimpleGrid columns={2} gap="6">
                 <Box>
-                  <Text fontSize="24px" fontWeight="bold" color="brand.primary">500+</Text>
-                  <Text fontSize="12px" opacity="0.6" fontFamily="mono">DESIGNERS</Text>
+                  <Text fontSize="24px" fontWeight="bold" color="brand.primary">{t.bento4Num1}</Text>
+                  <Text fontSize="12px" opacity="0.6" fontFamily="mono">{t.bento4Label1}</Text>
                 </Box>
                 <Box>
-                  <Text fontSize="24px" fontWeight="bold" color="brand.secondary">24h</Text>
-                  <Text fontSize="12px" opacity="0.6" fontFamily="mono">MENTOR SUPPORT</Text>
+                  <Text fontSize="24px" fontWeight="bold" color="brand.secondary">{t.bento4Num2}</Text>
+                  <Text fontSize="12px" opacity="0.6" fontFamily="mono">{t.bento4Label2}</Text>
                 </Box>
                 <Box>
-                  <Text fontSize="24px" fontWeight="bold" color="brand.primary">12</Text>
-                  <Text fontSize="12px" opacity="0.6" fontFamily="mono">INDUSTRY JUDGES</Text>
+                  <Text fontSize="24px" fontWeight="bold" color="brand.primary">{t.bento4Num3}</Text>
+                  <Text fontSize="12px" opacity="0.6" fontFamily="mono">{t.bento4Label3}</Text>
                 </Box>
                 <Box>
-                  <Text fontSize="24px" fontWeight="bold" color="brand.secondary">VIRTUAL</Text>
-                  <Text fontSize="12px" opacity="0.6" fontFamily="mono">GLOBAL ACCESS</Text>
+                  <Text fontSize="24px" fontWeight="bold" color="brand.secondary">{t.bento4Num4}</Text>
+                  <Text fontSize="12px" opacity="0.6" fontFamily="mono">{t.bento4Label4}</Text>
                 </Box>
               </SimpleGrid>
             </GridItem>
 
             <GridItem colSpan={1} {...glassPanelStyles} display="flex" flexDir="column" style={{justifyContent:'end'}} bgGradient="linear(to-br, rgba(76,215,246,0.05), transparent)">
-              <Text fontFamily="mono" fontSize="12px" color="brand.primary" mb="2">// CORE TRACKS</Text>
-              <Text fontSize="24px" fontWeight="semibold" lineHeight="tight">UI Evolution &<br />System Flows</Text>
+              <Text fontFamily="mono" fontSize="12px" color="brand.primary" mb="2">{t.bento5Label}</Text>
+              <Text fontSize="24px" fontWeight="semibold" lineHeight="tight" style={{ whiteSpace: 'pre-line' }}>{t.bento5Title}</Text>
             </GridItem>
           </Grid>
         </Box>
@@ -404,25 +550,23 @@ export default function HackathonLandingPage() {
           <SimpleGrid columns={{ base: 1, lg: 2 }} gap="16" maxW="1440px" mx="auto" px="6" alignItems="center">
             <VStack align="start" gap="6">
               <VStack align="start" gap="2">
-                <Text fontFamily="mono" fontSize="12px" color="brand.secondary" letterSpacing="widest">THE CHALLENGE</Text>
-                <Heading as="h2" fontSize="40px">Where Aesthetics Meets Logic</Heading>
+                <Text fontFamily="mono" fontSize="12px" color="brand.secondary" letterSpacing="widest">{t.challengeLabel}</Text>
+                <Heading as="h2" fontSize="40px">{t.challengeTitle}</Heading>
               </VStack>
-              <Text fontSize="18px" color={isDarkMode ? "brand.onSurfaceVariant" : "gray.700"}>
-                HackFlow asks you to bridge the gap between static canvas beauty and functional flow architecture. Using <Text as="span" color="brand.primary" fontWeight="bold">Canva's</Text> library, you'll build responsive UI interfaces that execute complex data states mapped on <Text as="span" color="brand.secondary" fontWeight="bold">Google Flow</Text>.
-              </Text>
+              <Text fontSize="18px" color={isDarkMode ? "brand.onSurfaceVariant" : "gray.700"}>{t.challengeDesc}</Text>
             </VStack>
 
             <VStack position="relative" pl="8" align="start" gap="10" id="schedule">
               <Box position="absolute" left="0" top="0" bottom="0" w="1" bgGradient="linear(to-b, brand.primary, brand.secondary, transparent)" opacity="0.3" />
               <Box position="relative">
                 <Box position="absolute" left="-38px" top="1" w="4" h="4" bg="brand.primary" borderRadius="full" border="4px solid #0c1324" />
-                <Text fontSize="12px" fontFamily="mono" color="brand.primary">OCTOBER 15</Text>
-                <Heading as="h4" fontSize="24px">Submission Opens</Heading>
+                <Text fontSize="12px" fontFamily="mono" color="brand.primary">{t.timeline1Date}</Text>
+                <Heading as="h4" fontSize="24px">{t.timeline1Title}</Heading>
               </Box>
               <Box position="relative">
                 <Box position="absolute" left="-38px" top="1" w="4" h="4" bg="brand.secondary" borderRadius="full" border="4px solid #0c1324" />
-                <Text fontSize="12px" fontFamily="mono" color="brand.secondary">OCTOBER 24</Text>
-                <Heading as="h4" fontSize="24px">Flow Workshop</Heading>
+                <Text fontSize="12px" fontFamily="mono" color="brand.secondary">{t.timeline2Date}</Text>
+                <Heading as="h4" fontSize="24px">{t.timeline2Title}</Heading>
               </Box>
             </VStack>
           </SimpleGrid>
@@ -433,15 +577,15 @@ export default function HackathonLandingPage() {
           <Box maxW="2xl" mx="auto">
             <Box {...glassPanelStyles} p={{ base: '8', md: '12' }} boxShadow="0 30px 60px -12px rgba(0,0,0,0.5)">
               <VStack gap="2" textAlign="center" mb="8">
-                <Heading as="h2" fontSize="40px">Secure Your Spot</Heading>
-                <Text color={isDarkMode ? "brand.onSurfaceVariant" : "gray.600"}>Registered data will route directly to ESOFT Monaragala IT Academic Desk.</Text>
+                <Heading as="h2" fontSize="40px">{t.formTitle}</Heading>
+                <Text color={isDarkMode ? "brand.onSurfaceVariant" : "gray.600"}>{t.formDesc}</Text>
               </VStack>
 
               <form onSubmit={handleRegisterSubmit}>
                 <VStack gap="5" align="stretch">
                   <SimpleGrid columns={{ base: 1, md: 2 }} gap="5" w="full">
                     <Field.Root required>
-                      <Field.Label fontSize="12px" fontFamily="mono" opacity="0.6">FULL NAME</Field.Label>
+                      <Field.Label fontSize="12px" fontFamily="mono" opacity="0.6">{t.labelName}</Field.Label>
                       <Input
                         bg={isDarkMode ? "brand.surface" : "white"}
                         border="1px solid rgba(255,255,255,0.1)"
@@ -456,7 +600,7 @@ export default function HackathonLandingPage() {
                     </Field.Root>
 
                     <Field.Root required>
-                      <Field.Label fontSize="12px" fontFamily="mono" opacity="0.6">EMAIL ADDRESS</Field.Label>
+                      <Field.Label fontSize="12px" fontFamily="mono" opacity="0.6">{t.labelEmail}</Field.Label>
                       <Input
                         type="email"
                         bg={isDarkMode ? "brand.surface" : "white"}
@@ -473,7 +617,7 @@ export default function HackathonLandingPage() {
                   </SimpleGrid>
 
                   <Field.Root required>
-                    <Field.Label fontSize="12px" fontFamily="mono" opacity="0.6">UNIVERSITY / INSTITUTE / SCHOOL</Field.Label>
+                    <Field.Label fontSize="12px" fontFamily="mono" opacity="0.6">{t.labelInstitute}</Field.Label>
                     <Input
                       bg={isDarkMode ? "brand.surface" : "white"}
                       border="1px solid rgba(255,255,255,0.1)"
@@ -489,7 +633,7 @@ export default function HackathonLandingPage() {
 
                   <SimpleGrid columns={{ base: 1, md: 2 }} gap="5" w="full">
                     <Field.Root required>
-                      <Field.Label fontSize="12px" fontFamily="mono" opacity="0.6">WHATSAPP NUMBER</Field.Label>
+                      <Field.Label fontSize="12px" fontFamily="mono" opacity="0.6">{t.labelWhatsapp}</Field.Label>
                       <Input
                         bg={isDarkMode ? "brand.surface" : "white"}
                         border="1px solid rgba(255,255,255,0.1)"
@@ -504,7 +648,7 @@ export default function HackathonLandingPage() {
                     </Field.Root>
 
                     <Field.Root>
-                      <Field.Label fontSize="12px" fontFamily="mono" opacity="0.6">EXPERIENCE LEVEL</Field.Label>
+                      <Field.Label fontSize="12px" fontFamily="mono" opacity="0.6">{t.labelExp}</Field.Label>
                       <Select.Root 
                         collection={experienceLevels} 
                         size="md"
@@ -549,7 +693,7 @@ export default function HackathonLandingPage() {
                   </SimpleGrid>
 
                   <Button type="submit" w="full" py="7" mt="4" bg="brand.primary" color="black" fontWeight="bold" fontFamily="mono" fontSize="12px" borderRadius="xl" _hover={{ boxShadow: '0 0 30px rgba(76, 215, 246, 0.4)' }}>
-                    SUBMIT REGISTRATION
+                    {t.btnSubmit}
                   </Button>
                 </VStack>
               </form>
