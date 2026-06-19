@@ -1097,11 +1097,11 @@ export default function HackathonLandingPage() {
       >
         <Flex justify="space-between" align="center" maxW="1440px" mx="auto" px="6" h="full">
           <VStack align="start" gap="0">
-            <Text fontSize="24px" fontWeight="900" letterSpacing="tighter" bgGradient="linear(to-r, #06b6d4, #3b82f6)" bgClip="text" lineHeight="1" style={{ fontFamily: "'Space Grotesk', sans-serif" }}>
+            <Text fontSize="24px" fontWeight="900" letterSpacing="tighter" color={"#06b6d4"} style={{ fontFamily: "'Space Grotesk', sans-serif" }}>
               HACKFLOW
             </Text>
             <Text fontSize="10px" fontFamily="'JetBrains Mono', monospace" opacity="0.7" display={{ base: 'none', sm: 'block' }}>
-              ESOFT Metro College
+              ESOFT Monaragala
             </Text>
           </VStack>
 
@@ -1137,8 +1137,8 @@ export default function HackathonLandingPage() {
 
             <Button
               display={{ base: 'none', sm: 'inline-flex' }}
-              bgGradient="linear(to-r, #06b6d4, #3b82f6)"
-              color="white"
+              bgColor="#06b6d4"
+              color={'white'}
               borderRadius="full"
               px="6"
               fontSize="12px"
@@ -1174,7 +1174,7 @@ export default function HackathonLandingPage() {
               <Link href="#schedule" onClick={() => setIsMobileMenuOpen(false)} py="2" lineHeight="1.5">{t.navSchedule}</Link>
               <Link href="#register" onClick={() => setIsMobileMenuOpen(false)} py="2" lineHeight="1.5">{t.navRegister}</Link>
               <Button
-                bgGradient="linear(to-r, #06b6d4, #3b82f6)"
+                bgColor=" #06b6d4"
                 color="white"
                 w="full"
                 lineHeight="1.2"
@@ -1227,7 +1227,7 @@ export default function HackathonLandingPage() {
                 <Text fontSize="10px" fontFamily="'JetBrains Mono', monospace" opacity="0.5" lineHeight="1">{t.minutes}</Text>
               </VStack>
               <VStack {...glassPanelStyles} p="4" gap="1" h="110px" justify="center" border="1px solid rgba(6, 182, 212, 0.4)" boxShadow="0 0 20px rgba(6, 182, 212, 0.15)" _hover={{ transform: "translateY(-4px)" }}>
-                <Text fontSize={{ base: "32px", md: "42px" }} fontWeight="800" bgGradient="linear(to-r, #06b6d4, #3b82f6)" bgClip="text" lineHeight="1">
+                <Text fontSize={{ base: "32px", md: "42px" }} fontWeight="800" color=" #06b6d4" lineHeight="1">
                   {isMounted ? timeLeft.seconds : "00"}
                 </Text>
                 <Text fontSize="10px" fontFamily="'JetBrains Mono', monospace" color="#06b6d4" fontWeight="bold" lineHeight="1">{t.seconds}</Text>
@@ -1237,7 +1237,7 @@ export default function HackathonLandingPage() {
             <Flex flexDir={{ base: 'column', sm: 'row' }} gap="4" w="full" justify="center" pt="4">
               <Button
                 size="lg"
-                bgGradient="linear(to-r, #06b6d4, #3b82f6)"
+                bgColor=" #06b6d4"
                 color="white"
                 borderRadius="full"
                 px="10"
@@ -1494,7 +1494,7 @@ export default function HackathonLandingPage() {
                     </Field.Root>
                   </SimpleGrid>
 
-                  <Button type="submit" w="full" py="7" mt="4" bgGradient="linear(to-r, #06b6d4, #3b82f6)" color="white" fontWeight="bold" fontFamily="'JetBrains Mono', monospace" fontSize="12px" borderRadius="xl" lineHeight="1.2" _hover={{ boxShadow: '0 0 30px rgba(6, 182, 212, 0.5)', transform: "translateY(-1px)" }}>
+                  <Button type="submit" w="full" py="7" mt="4" bgColor=" #06b6d4" color="white" fontWeight="bold" fontFamily="'JetBrains Mono', monospace" fontSize="12px" borderRadius="xl" lineHeight="1.2" _hover={{ boxShadow: '0 0 30px rgba(6, 182, 212, 0.5)', transform: "translateY(-1px)" }}>
                     {t.btnSubmit}
                   </Button>
                 </VStack>
@@ -1507,7 +1507,7 @@ export default function HackathonLandingPage() {
       {/* Footer */}
       <Box as="footer" bg={isDarkMode ? "#04060d" : "gray.200"} borderTop={`1px solid ${glassBorder}`} py="8" w="full">
         <Flex flexDir={{ base: 'column', md: 'row' }} justify="space-between" align="center" maxW="1440px" mx="auto" px="6" gap="4">
-          <Text fontSize="16px" fontWeight="bold" color="#06b6d4" lineHeight="1.2" style={{ fontFamily: "'Space Grotesk', sans-serif" }}>ESOFT MONARAGALA — IT DEPT</Text>
+          <Text fontSize="12px" fontWeight="bold" color="#06b6d4" lineHeight="1.2" style={{ fontFamily: "'Space Grotesk', sans-serif" }}>ESOFT Metro College - MONARAGALA</Text>
           <Text fontSize="12px" fontFamily="'JetBrains Mono', monospace" opacity="0.5" lineHeight="1.2">© 2026 HACKFLOW HACKATHON. ALL RIGHTS RESERVED.</Text>
         </Flex>
       </Box>
