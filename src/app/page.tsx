@@ -288,7 +288,7 @@ export default function HackathonLandingPage() {
                 <Text fontSize="10px" fontFamily="mono" opacity="0.6">MINUTES</Text>
               </VStack>
               <VStack {...glassPanelStyles} p="4" gap="1" border="1px solid rgba(76, 215, 246, 0.4)" boxShadow="0 0 15px rgba(76, 215, 246, 0.15)">
-                <Text fontSize={{ base: "30px", md: "40px" }} fontWeight="700" bgGradient="linear(to-r, brand.primary, brand.secondary)" bgClip="text">
+                <Text fontSize={{ base: "30px", md: "40px" }} fontWeight="700" color="brand.primary">
                   {isMounted ? timeLeft.seconds : "00"}
                 </Text>
                 <Text fontSize="10px" fontFamily="mono" color="brand.primary" fontWeight="bold">SECONDS</Text>
@@ -322,6 +322,7 @@ export default function HackathonLandingPage() {
         disabled={isLoading || !pdfStringUrl}
         borderColor="whiteAlpha.400"
         borderRadius="full"
+        color={isDarkMode ? "brand.onSurfaceVariant" : "gray.600"}
         px="10"
         fontSize="12px"
         _hover={{ borderColor: 'brand.primary', bg: 'rgba(76, 215, 246, 0.1)' }}
