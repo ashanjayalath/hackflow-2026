@@ -20,7 +20,7 @@ import {
   Portal,
   Select,
 } from '@chakra-ui/react';
-import { FiCalendar, FiMapPin, FiAward, FiCheckCircle, FiSun, FiMoon, FiMenu, FiX } from 'react-icons/fi';
+import { FiCalendar, FiMapPin, FiAward, FiCheckCircle, FiSun, FiMoon, FiMenu, FiX, FiDownload } from 'react-icons/fi';
 import { toaster } from "@/components/ui/toaster";
 
 export default function HackathonLandingPage() {
@@ -124,10 +124,15 @@ export default function HackathonLandingPage() {
         boxShadow={isDarkMode ? "0 0 20px rgba(76, 215, 246, 0.15)" : "0 2px 10px rgba(0,0,0,0.05)"}
         h="20"
       >
-        <Flex justify="between" align="center" maxW="1440px" mx="auto" px="6" h="full">
-          <Text fontSize="24px" fontWeight="900" letterSpacing="tighter" color="brand.primary">
-            HACKFLOW
-          </Text>
+        <Flex justify="space-between" align="center" maxW="1440px" mx="auto" px="6" h="full">
+          <VStack align="start" gap="0">
+            <Text fontSize="24px" fontWeight="900" letterSpacing="tighter" color="brand.primary" lineHeight="1">
+              HACKFLOW
+            </Text>
+            <Text fontSize="10px" fontFamily="mono" opacity="0.7" display={{ base: 'none', sm: 'block' }}>
+              ESOFT MONARAGALA IT DEPT
+            </Text>
+          </VStack>
 
           {/* Desktop Links */}
           <HStack gap="8" display={{ base: 'none', md: 'flex' }}>
@@ -209,9 +214,14 @@ export default function HackathonLandingPage() {
           
           <VStack gap="10" maxW="4xl" textAlign="center" zIndex="10">
             <VStack gap="4">
-              <Text fontFamily="mono" fontSize="12px" fontWeight="700" letterSpacing="widest" color="brand.primary" bg="rgba(76, 215, 246, 0.1)" px="4" py="1" borderRadius="full">
-                2026 VIRTUAL HACKATHON
-              </Text>
+              <VStack gap="1">
+                <Text fontFamily="mono" fontSize="12px" fontWeight="700" letterSpacing="widest" color="brand.primary" bg="rgba(76, 215, 246, 0.1)" px="4" py="1" borderRadius="full">
+                  2026 VIRTUAL HACKATHON
+                </Text>
+                <Text fontSize="11px" fontWeight="bold" letterSpacing="wider" opacity="0.8" color="brand.secondary">
+                  ORGANIZED BY IT DEPARTMENT — ESOFT METRO COLLEGE MONARAGALA
+                </Text>
+              </VStack>
               <Heading as="h1" fontSize={{ base: '36px', sm: '48px', md: '64px' }} fontWeight="900" letterSpacing="-0.04em" lineHeight="1.1">
                 Design Tomorrow:<br />
                 <Text as="span" bgGradient="linear(to-r, brand.primary, brand.secondary)" bgClip="text">
@@ -220,7 +230,7 @@ export default function HackathonLandingPage() {
               </Heading>
             </VStack>
 
-            {/* Countdown Widgets - Hydration Fixed via conditional render */}
+            {/* Countdown Widgets */}
             <SimpleGrid columns={{ base: 2, sm: 4 }} gap="4" w="full" maxW="lg" mx="auto">
               <VStack {...glassPanelStyles} p="4" gap="1">
                 <Text fontSize={{ base: "30px", md: "40px" }} fontWeight="700" color="brand.primary">{isMounted ? timeLeft.days : "00"}</Text>
@@ -235,7 +245,7 @@ export default function HackathonLandingPage() {
                 <Text fontSize="10px" fontFamily="mono" opacity="0.6">MINUTES</Text>
               </VStack>
               <VStack {...glassPanelStyles} p="4" gap="1" border="1px solid rgba(76, 215, 246, 0.4)" boxShadow="0 0 15px rgba(76, 215, 246, 0.15)">
-                <Text fontSize={{ base: "30px", md: "40px" }} fontWeight="700" bgGradient="linear(to-r, brand.primary, brand.secondary)" bgClip="text">
+                <Text fontSize={{ base: "30px", md: "40px" }} fontWeight="700" color="brand.primary">
                   {isMounted ? timeLeft.seconds : "00"}
                 </Text>
                 <Text fontSize="10px" fontFamily="mono" color="brand.primary" fontWeight="bold">SECONDS</Text>
@@ -251,22 +261,26 @@ export default function HackathonLandingPage() {
                 px="10"
                 fontSize="12px"
                 boxShadow="0 0 30px rgba(6, 182, 212, 0.3)"
-                _hover={{ boxShadow: '0 0 50px rgba(6, 182, 212, 0.5)' }}
+                _hover={{ boxShadow: '0 0 50px rgba(6, 182, 212, 0.6)' }}
                 onClick={() => document.getElementById('register')?.scrollIntoView({ behavior: 'smooth' })}
               >
                 REGISTER NOW
               </Button>
+              
+              {/* Linked Generated Trilingual Handbook PDF directly here */}
               <Button
+                as="a"
+                // href="/hackflow_2026_handbook.pdf"
+                // download="HackFlow_2026_Handbook.pdf"
                 size="lg"
                 variant="outline"
-                borderColor={isDarkMode ? "whiteAlpha.300" : "blackAlpha.300"}
+                borderColor={isDarkMode ? "whiteAlpha.400" : "blackAlpha.400"}
                 borderRadius="full"
                 px="10"
                 fontSize="12px"
-                _hover={{ borderColor: 'brand.primary' }}
-                onClick={() => document.getElementById('guidelines')?.scrollIntoView({ behavior: 'smooth' })}
+                _hover={{ borderColor: 'brand.primary', bg: 'rgba(76, 215, 246, 0.1)' }}
               >
-                VIEW GUIDELINES
+                <Icon as={FiDownload} /> DOWNLOAD HANDBOOK (EN/SI/TA)
               </Button>
             </Flex>
           </VStack>
@@ -284,7 +298,7 @@ export default function HackathonLandingPage() {
               <Icon as={FiCalendar} color="brand.primary" w="10" h="10" />
               <VStack align="start" gap="2">
                 <Heading as="h3" fontSize="24px">Schedule & Logistics</Heading>
-                <Text color={isDarkMode ? "brand.onSurfaceVariant" : "gray.600"}>Sprint starts soon. A 48-hour virtual breakdown of front-end UI creativity synced directly into functional state cycles.</Text>
+                <Text color={isDarkMode ? "brand.onSurfaceVariant" : "gray.600"}>Presented by ESOFT Monaragala IT Department. A 48-hour virtual breakdown of front-end UI creativity synced directly into functional state cycles.</Text>
               </VStack>
             </GridItem>
 
@@ -294,8 +308,8 @@ export default function HackathonLandingPage() {
                   <Icon as={FiMapPin} color="brand.secondary" w="6" h="6" />
                 </Flex>
               </HStack>
-              <Text fontFamily="mono" fontSize="12px" fontWeight="bold">Platform</Text>
-              <Text color={isDarkMode ? "brand.onSurfaceVariant" : "gray.600"}>Seamlessly blend Canva visual assets with Google Flow architecture logic systems.</Text>
+              <Text fontFamily="mono" fontSize="12px" fontWeight="bold">Campus Host</Text>
+              <Text color={isDarkMode ? "brand.onSurfaceVariant" : "gray.600"}>ESOFT Metro College Monaragala Branch — Smart Virtual Tech Suite Access.</Text>
             </GridItem>
 
             <GridItem colSpan={1} rowSpan={{ base: 1, md: 2 }} className="glow-border" borderRadius="2xl" overflow="hidden">
@@ -337,7 +351,7 @@ export default function HackathonLandingPage() {
           </Grid>
         </Box>
 
-        {/* Challenge Description & Workflow Timeline */}
+        {/* Challenge Description */}
         <Box py="20" bg={isDarkMode ? "rgba(7, 13, 31, 0.5)" : "gray.100"}>
           <SimpleGrid columns={{ base: 1, lg: 2 }} gap="16" maxW="1440px" mx="auto" px="6" alignItems="center">
             <VStack align="start" gap="6">
@@ -348,46 +362,31 @@ export default function HackathonLandingPage() {
               <Text fontSize="18px" color={isDarkMode ? "brand.onSurfaceVariant" : "gray.700"}>
                 HackFlow asks you to bridge the gap between static canvas beauty and functional flow architecture. Using <Text as="span" color="brand.primary" fontWeight="bold">Canva's</Text> library, you'll build responsive UI interfaces that execute complex data states mapped on <Text as="span" color="brand.secondary" fontWeight="bold">Google Flow</Text>.
               </Text>
-              <HStack gap="6" pt="2">
-                <HStack><Icon as={FiCheckCircle} color="brand.primary" /><Text fontFamily="mono" fontSize="14px">Asset Fidelity</Text></HStack>
-                <HStack><Icon as={FiCheckCircle} color="brand.secondary" /><Text fontFamily="mono" fontSize="14px">Logic Integrity</Text></HStack>
-              </HStack>
             </VStack>
 
             <VStack position="relative" pl="8" align="start" gap="10" id="schedule">
               <Box position="absolute" left="0" top="0" bottom="0" w="1" bgGradient="linear(to-b, brand.primary, brand.secondary, transparent)" opacity="0.3" />
-              
               <Box position="relative">
                 <Box position="absolute" left="-38px" top="1" w="4" h="4" bg="brand.primary" borderRadius="full" border="4px solid #0c1324" />
                 <Text fontSize="12px" fontFamily="mono" color="brand.primary">OCTOBER 15</Text>
                 <Heading as="h4" fontSize="24px">Submission Opens</Heading>
-                <Text color={isDarkMode ? "brand.onSurfaceVariant" : "gray.600"}>Portals open for initial design system submission.</Text>
               </Box>
-
               <Box position="relative">
                 <Box position="absolute" left="-38px" top="1" w="4" h="4" bg="brand.secondary" borderRadius="full" border="4px solid #0c1324" />
                 <Text fontSize="12px" fontFamily="mono" color="brand.secondary">OCTOBER 24</Text>
                 <Heading as="h4" fontSize="24px">Flow Workshop</Heading>
-                <Text color={isDarkMode ? "brand.onSurfaceVariant" : "gray.600"}>Exclusive strategy workflow sync hosted by expert design leads.</Text>
-              </Box>
-
-              <Box position="relative">
-                <Box position="absolute" left="-38px" top="1" w="4" h="4" bg="brand.primary" borderRadius="full" border="4px solid #0c1324" />
-                <Text fontSize="12px" fontFamily="mono" color="brand.primary">OCTOBER 26</Text>
-                <Heading as="h4" fontSize="24px">Final Review</Heading>
-                <Text color={isDarkMode ? "brand.onSurfaceVariant" : "gray.600"}>Submissions lock up. Live interactive jury evaluation kicks off.</Text>
               </Box>
             </VStack>
           </SimpleGrid>
         </Box>
 
-        {/* Dynamic Registration Form */}
+        {/* Form Registration Block */}
         <Box py="20" px="6" position="relative" id="register">
           <Box maxW="2xl" mx="auto">
             <Box {...glassPanelStyles} p={{ base: '8', md: '12' }} boxShadow="0 30px 60px -12px rgba(0,0,0,0.5)">
               <VStack gap="2" textAlign="center" mb="8">
                 <Heading as="h2" fontSize="40px">Secure Your Spot</Heading>
-                <Text color={isDarkMode ? "brand.onSurfaceVariant" : "gray.600"}>Lock in your dashboard registration. Join top technical universities.</Text>
+                <Text color={isDarkMode ? "brand.onSurfaceVariant" : "gray.600"}>Registered data will route directly to ESOFT Monaragala IT Academic Desk.</Text>
               </VStack>
 
               <form onSubmit={handleRegisterSubmit}>
@@ -426,14 +425,14 @@ export default function HackathonLandingPage() {
                   </SimpleGrid>
 
                   <Field.Root required>
-                    <Field.Label fontSize="12px" fontFamily="mono" opacity="0.6">UNIVERSITY / INSTITUTE</Field.Label>
+                    <Field.Label fontSize="12px" fontFamily="mono" opacity="0.6">UNIVERSITY / INSTITUTE / SCHOOL</Field.Label>
                     <Input
                       bg={isDarkMode ? "brand.surface" : "white"}
                       border="1px solid rgba(255,255,255,0.1)"
                       color={isDarkMode ? "white" : "black"}
                       borderRadius="xl"
                       py="6"
-                      placeholder="ESOFT Metro College - Monaragala"
+                      placeholder="ESOFT Metro College"
                       value={formData.institute}
                       onChange={(e) => setFormData({ ...formData, institute: e.target.value })}
                       _focus={{ borderColor: 'brand.primary' }}
@@ -489,15 +488,7 @@ export default function HackathonLandingPage() {
                           <Select.Positioner zIndex="60">
                             <Select.Content bg={isDarkMode ? "brand.surfaceLow" : "white"} borderColor="whiteAlpha.200" borderRadius="xl">
                               {experienceLevels.items.map((level) => (
-                                <Select.Item 
-                                  item={level} 
-                                  key={level.value}
-                                  color={isDarkMode ? "white" : "black"}
-                                  _hover={{ bg: "brand.primaryContainer", color: "white" }}
-                                  cursor="pointer"
-                                  p="3"
-                                  borderRadius="lg"
-                                >
+                                <Select.Item item={level} key={level.value} color={isDarkMode ? "white" : "black"} _hover={{ bg: "brand.primaryContainer", color: "white" }} cursor="pointer" p="3" borderRadius="lg">
                                   {level.label}
                                   <Select.ItemIndicator />
                                 </Select.Item>
@@ -509,19 +500,7 @@ export default function HackathonLandingPage() {
                     </Field.Root>
                   </SimpleGrid>
 
-                  <Button
-                    type="submit"
-                    w="full"
-                    py="7"
-                    mt="4"
-                    bg="brand.primary"
-                    color="black"
-                    fontWeight="bold"
-                    fontFamily="mono"
-                    fontSize="12px"
-                    borderRadius="xl"
-                    _hover={{ boxShadow: '0 0 30px rgba(76, 215, 246, 0.4)', filter: 'brightness(1.1)' }}
-                  >
+                  <Button type="submit" w="full" py="7" mt="4" bg="brand.primary" color="black" fontWeight="bold" fontFamily="mono" fontSize="12px" borderRadius="xl" _hover={{ boxShadow: '0 0 30px rgba(76, 215, 246, 0.4)' }}>
                     SUBMIT REGISTRATION
                   </Button>
                 </VStack>
@@ -534,12 +513,7 @@ export default function HackathonLandingPage() {
       {/* Footer */}
       <Box as="footer" bg={isDarkMode ? "brand.surfaceLow" : "gray.200"} borderTop={`1px solid ${glassBorder}`} py="8" w="full">
         <Flex flexDir={{ base: 'column', md: 'row' }} justify="between" align="center" maxW="1440px" mx="auto" px="6" gap="4">
-          <Text fontSize="20px" fontWeight="900" color="brand.primary">HACKFLOW</Text>
-          <HStack gap="6">
-            <Link fontSize="12px" fontFamily="mono" color={isDarkMode ? "brand.onSurfaceVariant" : "gray.600"} _hover={{ color: 'brand.primaryContainer' }}>Terms</Link>
-            <Link fontSize="12px" fontFamily="mono" color={isDarkMode ? "brand.onSurfaceVariant" : "gray.600"} _hover={{ color: 'brand.primaryContainer' }}>Privacy</Link>
-            <Link fontSize="12px" fontFamily="mono" color={isDarkMode ? "brand.onSurfaceVariant" : "gray.600"} _hover={{ color: 'brand.primaryContainer' }}>Discord</Link>
-          </HStack>
+          <Text fontSize="16px" fontWeight="bold" color="brand.primary">ESOFT MONARAGALA — IT DEPT</Text>
           <Text fontSize="12px" fontFamily="mono" opacity="0.6">© 2026 HACKFLOW HACKATHON. ALL RIGHTS RESERVED.</Text>
         </Flex>
       </Box>
