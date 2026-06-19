@@ -1,28 +1,31 @@
-import { extendTheme } from '@chakra-ui/react';
+import { createSystem, defineConfig, defaultConfig } from '@chakra-ui/react';
 
-export const theme = extendTheme({
-  config: {
-    initialColorMode: 'dark',
-    useSystemColorMode: false,
-  },
-  colors: {
-    brand: {
-      bg: '#0c1324',
-      primary: '#4cd7f6',
-      primaryContainer: '#06b6d4',
-      onPrimaryContainer: '#00424f',
-      secondary: '#ddb7ff',
-      surface: '#0c1324',
-      surfaceLow: '#151b2d',
-      surfaceContainer: '#191f31',
-      surfaceHigh: '#23293c',
-      onSurface: '#dce1fb',
-      onSurfaceVariant: '#bcc9cd',
+const customConfig = defineConfig({
+  theme: {
+    tokens: {
+      colors: {
+        brand: {
+          bg: { value: '#0c1324' },
+          primary: { value: '#4cd7f6' },
+          primaryContainer: { value: '#06b6d4' },
+          onPrimaryContainer: { value: '#00424f' },
+          secondary: { value: '#ddb7ff' },
+          surface: { value: '#0c1324' },
+          surfaceLow: { value: '#151b2d' },
+          surfaceContainer: { value: '#191f31' },
+          surfaceHigh: { value: '#23293c' },
+          onSurface: { value: '#dce1fb' },
+          onSurfaceVariant: { value: '#bcc9cd' },
+        },
+      },
+      fonts: {
+        heading: { value: `'Montserrat', sans-serif` },
+        body: { value: `'Inter', sans-serif` },
+        mono: { value: `'JetBrains Mono', monospace` },
+      },
     },
   },
-  fonts: {
-    heading: `'Montserrat', sans-serif`,
-    body: `'Inter', sans-serif`,
-    mono: `'JetBrains Mono', monospace`,
-  },
 });
+
+// createSystem එකෙන් defaultConfig එකත් එක්ක අපේ custom theme එක merge කරනවා
+export const system = createSystem(defaultConfig, customConfig);
