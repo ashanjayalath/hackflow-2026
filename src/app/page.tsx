@@ -19,6 +19,7 @@ import {
   createListCollection,
   Portal,
   Select,
+  DownloadTrigger,
 } from '@chakra-ui/react';
 import { FiCalendar, FiMapPin, FiAward, FiCheckCircle, FiSun, FiMoon, FiMenu, FiX, FiDownload } from 'react-icons/fi';
 import { toaster } from "@/components/ui/toaster";
@@ -32,6 +33,26 @@ export default function HackathonLandingPage() {
 
   // Countdown Timer States
   const [timeLeft, setTimeLeft] = useState({ days: '00', hours: '00', minutes: '00', seconds: '00' });
+  const [pdfStringUrl, setPdfStringUrl] = useState<string>("");
+  const [isLoading, setIsLoading] = useState(true);
+
+  useEffect(() => {
+    fetch('/hackflow_2026_handbook.pdf')
+      .then((res) => res.blob())
+      .then((blob) => {
+        // Blob එකෙන් String data URL එකක් සාදා ගැනීම (Chakra compatible)
+        const reader = new FileReader();
+        reader.onloadend = () => {
+          setPdfStringUrl(reader.result as string);
+          setIsLoading(false);
+        };
+        reader.readAsDataURL(blob);
+      })
+      .catch((err) => {
+        console.error("Error loading PDF: ", err);
+        setIsLoading(false);
+      });
+  }, []);
 
   useEffect(() => {
     setIsMounted(true);
@@ -152,7 +173,7 @@ export default function HackathonLandingPage() {
               HACKFLOW
             </Text>
             <Text fontSize="10px" fontFamily="mono" opacity="0.7" display={{ base: 'none', sm: 'block' }}>
-              ESOFT MONARAGALA IT DEPT
+              ESOFT Metro College
             </Text>
           </VStack>
 
@@ -289,20 +310,25 @@ export default function HackathonLandingPage() {
                 REGISTER NOW
               </Button>
               
-              <Button
-                as="a"
-                href="/hackflow_2026_handbook.pdf"
-                download="HackFlow_2026_Handbook.pdf"
-                size="lg"
-                variant="outline"
-                borderColor={isDarkMode ? "whiteAlpha.400" : "blackAlpha.400"}
-                borderRadius="full"
-                px="10"
-                fontSize="12px"
-                _hover={{ borderColor: 'brand.primary', bg: 'rgba(76, 215, 246, 0.1)' }}
+              <DownloadTrigger
+                data={pdfStringUrl}
+                fileName="HackFlow_2026_Handbook.pdf"
+                mimeType="application/pdf"
+                asChild
               >
-                <Icon as={FiDownload} /> DOWNLOAD HANDBOOK (EN/SI/TA)
-              </Button>
+      <Button
+        size="lg"
+        variant="outline"
+        disabled={isLoading || !pdfStringUrl}
+        borderColor="whiteAlpha.400"
+        borderRadius="full"
+        px="10"
+        fontSize="12px"
+        _hover={{ borderColor: 'brand.primary', bg: 'rgba(76, 215, 246, 0.1)' }}
+      >
+        <Icon as={FiDownload} /> {isLoading ? "LOADING HANDBOOK..." : "DOWNLOAD HANDBOOK (EN/SI/TA)"}
+      </Button>
+    </DownloadTrigger>
             </Flex>
           </VStack>
         </Flex>
