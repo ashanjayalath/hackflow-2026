@@ -25,7 +25,7 @@ import { FiCalendar, FiMapPin, FiAward, FiSun, FiMoon, FiMenu, FiX, FiDownload }
 import { toaster } from "@/components/ui/toaster";
 
 // ⚠️ ඔබ ලබාගත් Google Apps Script Web App URL එක මෙතැනට ඇතුළත් කරන්න
-const GOOGLE_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbyCoIV6g6yDvXwfuvsQqDLbpL0mi3-3OvOd7L2pgFLlK7m0NwrU9YYtfyl8HXUTrEGTlA/exec";
+const GOOGLE_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbysb1lZseebnB9-qXGlyhE3qP85qeTrv_AoQUNyj3PU4bXu9YVG9QdGgdtLmUgsHTw3Gw/exec";
 
 // Multi-language translation dictionaries
 const translations = {
@@ -211,7 +211,7 @@ export default function HackathonLandingPage() {
 
   // Fetch Institutes List from Google Sheet
   useEffect(() => {
-    if (GOOGLE_SCRIPT_URL !== "https://script.google.com/macros/s/AKfycbyCoIV6g6yDvXwfuvsQqDLbpL0mi3-3OvOd7L2pgFLlK7m0NwrU9YYtfyl8HXUTrEGTlA/exec") {
+    if (GOOGLE_SCRIPT_URL !== "https://script.google.com/macros/s/AKfycbysb1lZseebnB9-qXGlyhE3qP85qeTrv_AoQUNyj3PU4bXu9YVG9QdGgdtLmUgsHTw3Gw/exec") {
       fetch(GOOGLE_SCRIPT_URL)
         .then((res) => res.json())
         .then((data) => {
@@ -301,7 +301,7 @@ export default function HackathonLandingPage() {
   // Handle Form Submission into Google Sheet Endpoint API
   const handleRegisterSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (GOOGLE_SCRIPT_URL === "https://script.google.com/macros/s/AKfycbyCoIV6g6yDvXwfuvsQqDLbpL0mi3-3OvOd7L2pgFLlK7m0NwrU9YYtfyl8HXUTrEGTlA/exec") {
+    if (GOOGLE_SCRIPT_URL === "https://script.google.com/macros/s/AKfycbysb1lZseebnB9-qXGlyhE3qP85qeTrv_AoQUNyj3PU4bXu9YVG9QdGgdtLmUgsHTw3Gw/exec") {
       toaster.create({
         title: "Configuration Error",
         description: "Please set your valid Google Apps Script Web App URL.",
