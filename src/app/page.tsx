@@ -24,7 +24,7 @@ import {
 import { FiCalendar, FiMapPin, FiAward, FiSun, FiMoon, FiMenu, FiX, FiDownload } from 'react-icons/fi';
 import { toaster } from "@/components/ui/toaster";
 
-// ⚠️ ඔබ ලබාගත් Google Apps Script Web App URL එක මෙතැනට ඇතුළත් කරන්න
+// Google Apps Script Web App URL
 const GOOGLE_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbysb1lZseebnB9-qXGlyhE3qP85qeTrv_AoQUNyj3PU4bXu9YVG9QdGgdtLmUgsHTw3Gw/exec";
 
 // Multi-language translation dictionaries
@@ -150,7 +150,7 @@ const translations = {
     bento1Title: "அட்டவணை மற்றும் தளவாடங்கள்",
     bento1Desc: "மொனராகலை ஈசாப்ட் IT துறையினரின் விளக்கக்காட்சி. 48 மணிநேர UI மெய்நிகர் வடிவமைப்பு போட்டி.",
     bento2Title: "வளாக ஹோஸ்ட்",
-    bento2Desc: "ஈசாப்ட்評 மெட்ரோ கல்லூரி மொனராகலை கிளை — மெய்நிகர் தொழில்நுட்ப அணுகல்.",
+    bento2Desc: "ஈசாப்ட் மெட்ரோ கல்லூரி மொனராகலை கிளை — மெய்நிகர் தொழில்நுட்ப அணுகல்.",
     bento3Label: "பெருந்தொகை பரிசு",
     bento3Desc: "சிறந்த கண்டுபிடிப்பாளர்கள் மற்றும் வெற்றியாளர்களுக்கு விநியோகிக்கப்படும்.",
     bento4Num1: "500+", bento4Label1: "வடிவமைப்பாளர்கள்",
@@ -192,7 +192,7 @@ export default function HackathonLandingPage() {
   const [isLoading, setIsLoading] = useState(true);
   const [isSubmitting, setIsSubmitting] = useState(false);
 
-  // Google Sheets Institutes State ລັອກ
+  // Google Sheets Institutes State
   const [institutesList, setInstitutesList] = useState<string[]>([]);
 
   // Custom Cursor Mouse Glow Coordinates State
@@ -209,18 +209,16 @@ export default function HackathonLandingPage() {
     return () => window.removeEventListener('mousemove', handleMouseMove);
   }, []);
 
-  // Fetch Institutes List from Google Sheet
+  // Fetch Institutes List from Google Sheet (Condition Fixed)
   useEffect(() => {
-    if (GOOGLE_SCRIPT_URL !== "https://script.google.com/macros/s/AKfycbysb1lZseebnB9-qXGlyhE3qP85qeTrv_AoQUNyj3PU4bXu9YVG9QdGgdtLmUgsHTw3Gw/exec") {
-      fetch(GOOGLE_SCRIPT_URL)
-        .then((res) => res.json())
-        .then((data) => {
-          if (data && data.institutes) {
-            setInstitutesList(data.institutes);
-          }
-        })
-        .catch((err) => console.error("Error fetching institutes from Google Sheet: ", err));
-    }
+    fetch(GOOGLE_SCRIPT_URL)
+      .then((res) => res.json())
+      .then((data) => {
+        if (data && data.institutes) {
+          setInstitutesList(data.institutes);
+        }
+      })
+      .catch((err) => console.error("Error fetching institutes from Google Sheet: ", err));
   }, []);
 
   useEffect(() => {
@@ -301,14 +299,6 @@ export default function HackathonLandingPage() {
   // Handle Form Submission into Google Sheet Endpoint API
   const handleRegisterSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (GOOGLE_SCRIPT_URL === "https://script.google.com/macros/s/AKfycbysb1lZseebnB9-qXGlyhE3qP85qeTrv_AoQUNyj3PU4bXu9YVG9QdGgdtLmUgsHTw3Gw/exec") {
-      toaster.create({
-        title: "Configuration Error",
-        description: "Please set your valid Google Apps Script Web App URL.",
-        type: 'error'
-      });
-      return;
-    }
 
     if (!formData.institute) {
       toaster.create({
@@ -322,9 +312,9 @@ export default function HackathonLandingPage() {
     setIsSubmitting(true);
 
     try {
-      const response = await fetch(GOOGLE_SCRIPT_URL, {
+      await fetch(GOOGLE_SCRIPT_URL, {
         method: 'POST',
-        mode: 'no-cors', // CORS redirects bypass locking redirection handling
+        mode: 'no-cors',
         headers: {
           'Content-Type': 'application/json',
         },
@@ -760,7 +750,7 @@ export default function HackathonLandingPage() {
                       />
                     </Field.Root>
 
-                    <Field.Root required>
+                    <Field.Root >
                       <Field.Label fontSize="12px" fontFamily="'JetBrains Mono', monospace" opacity="0.6" fontWeight="bold" lineHeight="1.5">{t.labelEmail}</Field.Label>
                       <Input
                         type="email"
@@ -778,7 +768,7 @@ export default function HackathonLandingPage() {
                     </Field.Root>
                   </SimpleGrid>
 
-                  {/* 🌟 UNIVERSITY / INSTITUTE SELECT COMPONENT (Sheet Integrated) */}
+                  {/* 🌟 UNIVERSITY / INSTITUTE SELECT COMPONENT */}
                   <Field.Root required>
                     <Field.Label fontSize="12px" fontFamily="'JetBrains Mono', monospace" opacity="0.6" fontWeight="bold" lineHeight="1.5">{t.labelInstitute}</Field.Label>
                     <Select.Root 
