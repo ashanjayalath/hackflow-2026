@@ -21,7 +21,7 @@ import {
   Select,
   DownloadTrigger,
 } from '@chakra-ui/react';
-import { FiCalendar, FiMapPin, FiAward, FiCheckCircle, FiSun, FiMoon, FiMenu, FiX, FiDownload, FiGlobe } from 'react-icons/fi';
+import { FiCalendar, FiMapPin, FiAward, FiCheckCircle, FiSun, FiMoon, FiMenu, FiX, FiDownload } from 'react-icons/fi';
 import { toaster } from "@/components/ui/toaster";
 
 // Multi-language translation dictionaries
@@ -91,7 +91,7 @@ const translations = {
     regNow: "දැන්ම ලියාපදිංචි වන්න",
     viewGuide: "විස්තර පොත බාගත කරන්න (EN/SI/TA)",
     loading: "බාගත වෙමින් පවතී...",
-    eventOverview: "තරඟාවලි දළ විශ්ලේෂණය",
+    eventOverview: "तरඟාවලි දළ විශ්ලේෂණය",
     bento1Title: "කාලසටහන සහ සංවිධාන කටයුතු",
     bento1Desc: "මොනරාගල ESOFT IT දෙපාර්තමේන්තුව ඉදිරිපත් කරන පැය 48ක අඛණ්ඩ UI නිර්මාණශීලී තාක්ෂණික එකතුවකි.",
     bento2Title: "කැම්පස් සත්කාරකත්වය",
@@ -138,7 +138,7 @@ const translations = {
     seconds: "விநாடிகள்",
     regNow: "இப்போது பதிவு செய்க",
     viewGuide: "கையேட்டைப் பதிவிறக்கவும் (EN/SI/TA)",
-    loading: "பதிவிறக்கப் படுகிறது...",
+    loading: "அடைவு செய்யப்படுகிறது...",
     eventOverview: "நிகழ்ச்சி மேலோட்டம்",
     bento1Title: "அட்டவணை மற்றும் தளவாடங்கள்",
     bento1Desc: "மொனராகலை ஈசாப்ட் IT துறையினரின் விளக்கக்காட்சி. 48 மணிநேர UI மெய்நிகர் வடிவமைப்பு போட்டி.",
@@ -316,21 +316,21 @@ export default function HackathonLandingPage() {
             </Text>
           </VStack>
 
-          {/* Desktop Links (Localized) */}
+          {/* Desktop Links */}
           <HStack gap="8" display={{ base: 'none', md: 'flex' }}>
-            <Link href="#" color="brand.primary" fontWeight="bold" fontFamily="mono" fontSize="14px">{t.navHome}</Link>
-            <Link href="#guidelines" color={isDarkMode ? "brand.onSurfaceVariant" : "gray.600"} fontWeight="medium" fontFamily="mono" fontSize="14px" _hover={{ color: 'brand.primary' }}>{t.navGuidelines}</Link>
-            <Link href="#schedule" color={isDarkMode ? "brand.onSurfaceVariant" : "gray.600"} fontWeight="medium" fontFamily="mono" fontSize="14px" _hover={{ color: 'brand.primary' }}>{t.navSchedule}</Link>
-            <Link href="#register" color={isDarkMode ? "brand.onSurfaceVariant" : "gray.600"} fontWeight="medium" fontFamily="mono" fontSize="14px" _hover={{ color: 'brand.primary' }}>{t.navRegister}</Link>
+            <Link href="#" color="brand.primary" fontWeight="bold" fontFamily="mono" fontSize="14px" lineHeight="1.2">{t.navHome}</Link>
+            <Link href="#guidelines" color={isDarkMode ? "brand.onSurfaceVariant" : "gray.600"} fontWeight="medium" fontFamily="mono" fontSize="14px" lineHeight="1.2" _hover={{ color: 'brand.primary' }}>{t.navGuidelines}</Link>
+            <Link href="#schedule" color={isDarkMode ? "brand.onSurfaceVariant" : "gray.600"} fontWeight="medium" fontFamily="mono" fontSize="14px" lineHeight="1.2" _hover={{ color: 'brand.primary' }}>{t.navSchedule}</Link>
+            <Link href="#register" color={isDarkMode ? "brand.onSurfaceVariant" : "gray.600"} fontWeight="medium" fontFamily="mono" fontSize="14px" lineHeight="1.2" _hover={{ color: 'brand.primary' }}>{t.navRegister}</Link>
           </HStack>
 
-          {/* Right Action Menu with Multi-Language Switcher */}
+          {/* Right Action Menu */}
           <HStack gap="4">
-            {/* Elegant Language Selector Switcher */}
-            <HStack bg={isDarkMode ? "whiteAlpha.100" : "blackAlpha.100"} p="1" borderRadius="full" gap="1">
-              <Button size="xs" variant={currentLang === 'en' ? 'solid' : 'ghost'} bg={currentLang === 'en' ? 'brand.primary' : 'transparent'} color={currentLang === 'en' ? 'black' : currentTextColor} borderRadius="full" onClick={() => setCurrentLang('en')}>EN</Button>
-              <Button size="xs" variant={currentLang === 'si' ? 'solid' : 'ghost'} bg={currentLang === 'si' ? 'brand.primary' : 'transparent'} color={currentLang === 'si' ? 'black' : currentTextColor} borderRadius="full" onClick={() => setCurrentLang('si')}>සිං</Button>
-              <Button size="xs" variant={currentLang === 'ta' ? 'solid' : 'ghost'} bg={currentLang === 'ta' ? 'brand.primary' : 'transparent'} color={currentLang === 'ta' ? 'black' : currentTextColor} borderRadius="full" onClick={() => setCurrentLang('ta')}>தம</Button>
+            {/* Language Selection Buttons */}
+            <HStack bg={isDarkMode ? "whiteAlpha.100" : "blackAlpha.100"} p="1" borderRadius="full" gap="1" h="32px">
+              <Button size="xs" variant={currentLang === 'en' ? 'solid' : 'ghost'} bg={currentLang === 'en' ? 'brand.primary' : 'transparent'} color={currentLang === 'en' ? 'black' : currentTextColor} borderRadius="full" fontWeight="bold" onClick={() => setCurrentLang('en')}>EN</Button>
+              <Button size="xs" variant={currentLang === 'si' ? 'solid' : 'ghost'} bg={currentLang === 'si' ? 'brand.primary' : 'transparent'} color={currentLang === 'si' ? 'black' : currentTextColor} borderRadius="full" fontWeight="bold" onClick={() => setCurrentLang('si')}>සිං</Button>
+              <Button size="xs" variant={currentLang === 'ta' ? 'solid' : 'ghost'} bg={currentLang === 'ta' ? 'brand.primary' : 'transparent'} color={currentLang === 'ta' ? 'black' : currentTextColor} borderRadius="full" fontWeight="bold" onClick={() => setCurrentLang('ta')}>தம</Button>
             </HStack>
 
             <Button
@@ -354,6 +354,7 @@ export default function HackathonLandingPage() {
               fontSize="12px"
               fontWeight="bold"
               fontFamily="mono"
+              lineHeight="1.2"
               onClick={() => document.getElementById('register')?.scrollIntoView({ behavior: 'smooth' })}
             >
               {t.joinNow}
@@ -376,14 +377,15 @@ export default function HackathonLandingPage() {
         {isMobileMenuOpen && (
           <Box display={{ md: 'none' }} bg={isDarkMode ? "brand.surfaceLow" : "white"} borderBottom={`1px solid ${glassBorder}`} px="6" py="4" position="absolute" top="20" left="0" w="full" zIndex="45">
             <VStack gap="4" align="stretch">
-              <Link href="#" onClick={() => setIsMobileMenuOpen(false)} py="2">{t.navHome}</Link>
-              <Link href="#guidelines" onClick={() => setIsMobileMenuOpen(false)} py="2">{t.navGuidelines}</Link>
-              <Link href="#schedule" onClick={() => setIsMobileMenuOpen(false)} py="2">{t.navSchedule}</Link>
-              <Link href="#register" onClick={() => setIsMobileMenuOpen(false)} py="2">{t.navRegister}</Link>
+              <Link href="#" onClick={() => setIsMobileMenuOpen(false)} py="2" lineHeight="1.5">{t.navHome}</Link>
+              <Link href="#guidelines" onClick={() => setIsMobileMenuOpen(false)} py="2" lineHeight="1.5">{t.navGuidelines}</Link>
+              <Link href="#schedule" onClick={() => setIsMobileMenuOpen(false)} py="2" lineHeight="1.5">{t.navSchedule}</Link>
+              <Link href="#register" onClick={() => setIsMobileMenuOpen(false)} py="2" lineHeight="1.5">{t.navRegister}</Link>
               <Button
                 bg="brand.primaryContainer"
                 color="brand.onPrimaryContainer"
                 w="full"
+                lineHeight="1.2"
                 onClick={() => { setIsMobileMenuOpen(false); document.getElementById('register')?.scrollIntoView({ behavior: 'smooth' }); }}
               >
                 {t.joinNow}
@@ -404,14 +406,14 @@ export default function HackathonLandingPage() {
           <VStack gap="10" maxW="4xl" textAlign="center" zIndex="10">
             <VStack gap="4">
               <VStack gap="1">
-                <Text fontFamily="mono" fontSize="12px" fontWeight="700" letterSpacing="widest" color="brand.primary" bg="rgba(76, 215, 246, 0.1)" px="4" py="1" borderRadius="full">
+                <Text fontFamily="mono" fontSize="12px" fontWeight="700" letterSpacing="widest" color="brand.primary" bg="rgba(76, 215, 246, 0.1)" px="4" py="1" borderRadius="full" lineHeight="1.5">
                   {t.virtualHack}
                 </Text>
-                <Text fontSize="11px" fontWeight="bold" letterSpacing="wider" opacity="0.8" color="brand.secondary">
+                <Text fontSize="11px" fontWeight="bold" letterSpacing="wider" opacity="0.8" color="brand.secondary" lineHeight="1.5">
                   {t.organizedBy}
                 </Text>
               </VStack>
-              <Heading as="h1" fontSize={{ base: '36px', sm: '48px', md: '64px' }} fontWeight="900" letterSpacing="-0.04em" lineHeight="1.1">
+              <Heading as="h1" fontSize={{ base: '36px', sm: '48px', md: '56px' }} fontWeight="900" letterSpacing="-0.04em" lineHeight="1.2">
                 {t.heroTitle1}<br />
                 <Text as="span" bgGradient="linear(to-r, brand.primary, brand.secondary)" bgClip="text">
                   {t.heroTitle2}
@@ -421,23 +423,23 @@ export default function HackathonLandingPage() {
 
             {/* Countdown Widgets */}
             <SimpleGrid columns={{ base: 2, sm: 4 }} gap="4" w="full" maxW="lg" mx="auto">
-              <VStack {...glassPanelStyles} p="4" gap="1">
-                <Text fontSize={{ base: "30px", md: "40px" }} fontWeight="700" color="brand.primary">{isMounted ? timeLeft.days : "00"}</Text>
-                <Text fontSize="10px" fontFamily="mono" opacity="0.6">{t.days}</Text>
+              <VStack {...glassPanelStyles} p="4" gap="1" h="110px" justify="center">
+                <Text fontSize={{ base: "30px", md: "40px" }} fontWeight="700" color="brand.primary" lineHeight="1">{isMounted ? timeLeft.days : "00"}</Text>
+                <Text fontSize="10px" fontFamily="mono" opacity="0.6" lineHeight="1">{t.days}</Text>
               </VStack>
-              <VStack {...glassPanelStyles} p="4" gap="1">
-                <Text fontSize={{ base: "30px", md: "40px" }} fontWeight="700" color="brand.primary">{isMounted ? timeLeft.hours : "00"}</Text>
-                <Text fontSize="10px" fontFamily="mono" opacity="0.6">{t.hours}</Text>
+              <VStack {...glassPanelStyles} p="4" gap="1" h="110px" justify="center">
+                <Text fontSize={{ base: "30px", md: "40px" }} fontWeight="700" color="brand.primary" lineHeight="1">{isMounted ? timeLeft.hours : "00"}</Text>
+                <Text fontSize="10px" fontFamily="mono" opacity="0.6" lineHeight="1">{t.hours}</Text>
               </VStack>
-              <VStack {...glassPanelStyles} p="4" gap="1">
-                <Text fontSize={{ base: "30px", md: "40px" }} fontWeight="700" color="brand.primary">{isMounted ? timeLeft.minutes : "00"}</Text>
-                <Text fontSize="10px" fontFamily="mono" opacity="0.6">{t.minutes}</Text>
+              <VStack {...glassPanelStyles} p="4" gap="1" h="110px" justify="center">
+                <Text fontSize={{ base: "30px", md: "40px" }} fontWeight="700" color="brand.primary" lineHeight="1">{isMounted ? timeLeft.minutes : "00"}</Text>
+                <Text fontSize="10px" fontFamily="mono" opacity="0.6" lineHeight="1">{t.minutes}</Text>
               </VStack>
-              <VStack {...glassPanelStyles} p="4" gap="1" border="1px solid rgba(76, 215, 246, 0.4)" boxShadow="0 0 15px rgba(76, 215, 246, 0.15)">
-                <Text fontSize={{ base: "30px", md: "40px" }} fontWeight="700" color="brand.primary">
+              <VStack {...glassPanelStyles} p="4" gap="1" h="110px" justify="center" border="1px solid rgba(76, 215, 246, 0.4)" boxShadow="0 0 15px rgba(76, 215, 246, 0.15)">
+                <Text fontSize={{ base: "30px", md: "40px" }} fontWeight="700" color="brand.primary" lineHeight="1">
                   {isMounted ? timeLeft.seconds : "00"}
                 </Text>
-                <Text fontSize="10px" fontFamily="mono" color="brand.primary" fontWeight="bold">{t.seconds}</Text>
+                <Text fontSize="10px" fontFamily="mono" color="brand.primary" fontWeight="bold" lineHeight="1">{t.seconds}</Text>
               </VStack>
             </SimpleGrid>
 
@@ -449,6 +451,7 @@ export default function HackathonLandingPage() {
                 borderRadius="full"
                 px="10"
                 fontSize="12px"
+                lineHeight="1.2"
                 boxShadow="0 0 30px rgba(6, 182, 212, 0.3)"
                 _hover={{ boxShadow: '0 0 50px rgba(6, 182, 212, 0.6)' }}
                 onClick={() => document.getElementById('register')?.scrollIntoView({ behavior: 'smooth' })}
@@ -471,6 +474,7 @@ export default function HackathonLandingPage() {
                   color={isDarkMode ? "brand.onSurfaceVariant" : "gray.600"}
                   px="10"
                   fontSize="12px"
+                  lineHeight="1.2"
                   _hover={{ borderColor: 'brand.primary', bg: 'rgba(76, 215, 246, 0.1)' }}
                 >
                   <Icon as={FiDownload} /> {isLoading ? t.loading : t.viewGuide}
@@ -483,64 +487,64 @@ export default function HackathonLandingPage() {
         {/* Bento Grid Event Overview */}
         <Box py="20" px="6" maxW="1440px" mx="auto" id="guidelines">
           <Box mb="10">
-            <Heading as="h2" fontSize="40px" mb="2">{t.eventOverview}</Heading>
+            <Heading as="h2" fontSize="40px" mb="2" lineHeight="1.2">{t.eventOverview}</Heading>
             <Box w="20" h="1" bg="brand.primary" borderRadius="full" />
           </Box>
 
           <Grid templateColumns={{ base: '1fr', md: 'repeat(4, 1fr)' }} gap="6">
-            <GridItem colSpan={{ base: 1, md: 2 }} {...glassPanelStyles} display="flex" flexDir="column" style={{ justifyContent: 'space-between' }} gap="6" _hover={{ borderColor: 'rgba(76, 215, 246, 0.3)' }} transition="all 0.3s">
+            <GridItem colSpan={{ base: 1, md: 2 }} {...glassPanelStyles} minH="220px" display="flex" flexDir="column" style={{ justifyContent: 'space-between' }} gap="4" _hover={{ borderColor: 'rgba(76, 215, 246, 0.3)' }} transition="all 0.3s">
               <Icon as={FiCalendar} color="brand.primary" w="10" h="10" />
               <VStack align="start" gap="2">
-                <Heading as="h3" fontSize="24px">{t.bento1Title}</Heading>
-                <Text color={isDarkMode ? "brand.onSurfaceVariant" : "gray.600"}>{t.bento1Desc}</Text>
+                <Heading as="h3" fontSize="24px" lineHeight="1.2">{t.bento1Title}</Heading>
+                <Text color={isDarkMode ? "brand.onSurfaceVariant" : "gray.600"} fontSize="14px" lineHeight="1.5">{t.bento1Desc}</Text>
               </VStack>
             </GridItem>
 
-            <GridItem colSpan={1} {...glassPanelStyles} display="flex" flexDir="column" gap="4">
-              <HStack gap="4">
-                <Flex w="12" h="12" bg={isDarkMode ? "brand.surfaceHigh" : "gray.200"} borderRadius="xl" align="center" justify="center">
-                  <Icon as={FiMapPin} color="brand.secondary" w="6" h="6" />
-                </Flex>
-              </HStack>
-              <Text fontFamily="mono" fontSize="12px" fontWeight="bold">{t.bento2Title}</Text>
-              <Text color={isDarkMode ? "brand.onSurfaceVariant" : "gray.600"}>{t.bento2Desc}</Text>
+            <GridItem colSpan={1} {...glassPanelStyles} minH="220px" display="flex" flexDir="column" gap="4">
+              <Flex w="12" h="12" bg={isDarkMode ? "brand.surfaceHigh" : "gray.200"} borderRadius="xl" align="center" justify="center">
+                <Icon as={FiMapPin} color="brand.secondary" w="6" h="6" />
+              </Flex>
+              <VStack align="start" gap="1" mt="auto">
+                <Text fontFamily="mono" fontSize="12px" fontWeight="bold" lineHeight="1.2">{t.bento2Title}</Text>
+                <Text color={isDarkMode ? "brand.onSurfaceVariant" : "gray.600"} fontSize="14px" lineHeight="1.5">{t.bento2Desc}</Text>
+              </VStack>
             </GridItem>
 
             <GridItem colSpan={1} rowSpan={{ base: 1, md: 2 }} className="glow-border" borderRadius="2xl" overflow="hidden">
-              <Flex {...glassPanelStyles} h="full" w="full" flexDir="column" align="center" justify="center" textAlign="center" gap="4">
-                <Icon as={FiAward} color="yellow.400" w="14" h="14" mb="4" />
+              <Flex {...glassPanelStyles} h="full" w="full" minH="220px" flexDir="column" align="center" justify="center" textAlign="center" gap="4">
+                <Icon as={FiAward} color="yellow.400" w="14" h="14" mb="2" />
                 <Box>
-                  <Text fontFamily="mono" fontSize="12px" color="brand.primary" letterSpacing="widest">{t.bento3Label}</Text>
-                  <Text fontSize="32px" fontWeight="900" bgGradient="linear(to-br, brand.primary, brand.secondary)" bgClip="text">Rs. 25,000</Text>
+                  <Text fontFamily="mono" fontSize="12px" color="brand.primary" letterSpacing="widest" lineHeight="1.5">{t.bento3Label}</Text>
+                  <Text fontSize="32px" fontWeight="900" bgGradient="linear(to-br, brand.primary, brand.secondary)" bgClip="text" lineHeight="1.2">Rs. 25,000</Text>
                 </Box>
-                <Text color={isDarkMode ? "brand.onSurfaceVariant" : "gray.600"} fontSize="sm" mt="2">{t.bento3Desc}</Text>
+                <Text color={isDarkMode ? "brand.onSurfaceVariant" : "gray.600"} fontSize="13px" lineHeight="1.5">{t.bento3Desc}</Text>
               </Flex>
             </GridItem>
 
-            <GridItem colSpan={{ base: 1, md: 2 }} {...glassPanelStyles}>
-              <SimpleGrid columns={2} gap="6">
+            <GridItem colSpan={{ base: 1, md: 2 }} {...glassPanelStyles} minH="160px" display="flex" alignItems="center">
+              <SimpleGrid columns={2} gap="6" w="full">
                 <Box>
-                  <Text fontSize="24px" fontWeight="bold" color="brand.primary">{t.bento4Num1}</Text>
-                  <Text fontSize="12px" opacity="0.6" fontFamily="mono">{t.bento4Label1}</Text>
+                  <Text fontSize="24px" fontWeight="bold" color="brand.primary" lineHeight="1.2">{t.bento4Num1}</Text>
+                  <Text fontSize="11px" opacity="0.6" fontFamily="mono" lineHeight="1.2">{t.bento4Label1}</Text>
                 </Box>
                 <Box>
-                  <Text fontSize="24px" fontWeight="bold" color="brand.secondary">{t.bento4Num2}</Text>
-                  <Text fontSize="12px" opacity="0.6" fontFamily="mono">{t.bento4Label2}</Text>
+                  <Text fontSize="24px" fontWeight="bold" color="brand.secondary" lineHeight="1.2">{t.bento4Num2}</Text>
+                  <Text fontSize="11px" opacity="0.6" fontFamily="mono" lineHeight="1.2">{t.bento4Label2}</Text>
                 </Box>
                 <Box>
-                  <Text fontSize="24px" fontWeight="bold" color="brand.primary">{t.bento4Num3}</Text>
-                  <Text fontSize="12px" opacity="0.6" fontFamily="mono">{t.bento4Label3}</Text>
+                  <Text fontSize="24px" fontWeight="bold" color="brand.primary" lineHeight="1.2">{t.bento4Num3}</Text>
+                  <Text fontSize="11px" opacity="0.6" fontFamily="mono" lineHeight="1.2">{t.bento4Label3}</Text>
                 </Box>
                 <Box>
-                  <Text fontSize="24px" fontWeight="bold" color="brand.secondary">{t.bento4Num4}</Text>
-                  <Text fontSize="12px" opacity="0.6" fontFamily="mono">{t.bento4Label4}</Text>
+                  <Text fontSize="24px" fontWeight="bold" color="brand.secondary" lineHeight="1.2">{t.bento4Num4}</Text>
+                  <Text fontSize="11px" opacity="0.6" fontFamily="mono" lineHeight="1.2">{t.bento4Label4}</Text>
                 </Box>
               </SimpleGrid>
             </GridItem>
 
-            <GridItem colSpan={1} {...glassPanelStyles} display="flex" flexDir="column" style={{justifyContent:'end'}} bgGradient="linear(to-br, rgba(76,215,246,0.05), transparent)">
-              <Text fontFamily="mono" fontSize="12px" color="brand.primary" mb="2">{t.bento5Label}</Text>
-              <Text fontSize="24px" fontWeight="semibold" lineHeight="tight" style={{ whiteSpace: 'pre-line' }}>{t.bento5Title}</Text>
+            <GridItem colSpan={1} {...glassPanelStyles} minH="160px" display="flex" flexDir="column" style={{justifyContent:'end'}} bgGradient="linear(to-br, rgba(76,215,246,0.05), transparent)">
+              <Text fontFamily="mono" fontSize="12px" color="brand.primary" mb="2" lineHeight="1.2">{t.bento5Label}</Text>
+              <Text fontSize="22px" fontWeight="semibold" lineHeight="1.3" style={{ whiteSpace: 'pre-line' }}>{t.bento5Title}</Text>
             </GridItem>
           </Grid>
         </Box>
@@ -550,23 +554,23 @@ export default function HackathonLandingPage() {
           <SimpleGrid columns={{ base: 1, lg: 2 }} gap="16" maxW="1440px" mx="auto" px="6" alignItems="center">
             <VStack align="start" gap="6">
               <VStack align="start" gap="2">
-                <Text fontFamily="mono" fontSize="12px" color="brand.secondary" letterSpacing="widest">{t.challengeLabel}</Text>
-                <Heading as="h2" fontSize="40px">{t.challengeTitle}</Heading>
+                <Text fontFamily="mono" fontSize="12px" color="brand.secondary" letterSpacing="widest" lineHeight="1.2">{t.challengeLabel}</Text>
+                <Heading as="h2" fontSize="40px" lineHeight="1.2">{t.challengeTitle}</Heading>
               </VStack>
-              <Text fontSize="18px" color={isDarkMode ? "brand.onSurfaceVariant" : "gray.700"}>{t.challengeDesc}</Text>
+              <Text fontSize="17px" color={isDarkMode ? "brand.onSurfaceVariant" : "gray.700"} lineHeight="1.6">{t.challengeDesc}</Text>
             </VStack>
 
             <VStack position="relative" pl="8" align="start" gap="10" id="schedule">
               <Box position="absolute" left="0" top="0" bottom="0" w="1" bgGradient="linear(to-b, brand.primary, brand.secondary, transparent)" opacity="0.3" />
               <Box position="relative">
                 <Box position="absolute" left="-38px" top="1" w="4" h="4" bg="brand.primary" borderRadius="full" border="4px solid #0c1324" />
-                <Text fontSize="12px" fontFamily="mono" color="brand.primary">{t.timeline1Date}</Text>
-                <Heading as="h4" fontSize="24px">{t.timeline1Title}</Heading>
+                <Text fontSize="12px" fontFamily="mono" color="brand.primary" lineHeight="1.2">{t.timeline1Date}</Text>
+                <Heading as="h4" fontSize="24px" lineHeight="1.2">{t.timeline1Title}</Heading>
               </Box>
               <Box position="relative">
                 <Box position="absolute" left="-38px" top="1" w="4" h="4" bg="brand.secondary" borderRadius="full" border="4px solid #0c1324" />
-                <Text fontSize="12px" fontFamily="mono" color="brand.secondary">{t.timeline2Date}</Text>
-                <Heading as="h4" fontSize="24px">{t.timeline2Title}</Heading>
+                <Text fontSize="12px" fontFamily="mono" color="brand.secondary" lineHeight="1.2">{t.timeline2Date}</Text>
+                <Heading as="h4" fontSize="24px" lineHeight="1.2">{t.timeline2Title}</Heading>
               </Box>
             </VStack>
           </SimpleGrid>
@@ -577,15 +581,15 @@ export default function HackathonLandingPage() {
           <Box maxW="2xl" mx="auto">
             <Box {...glassPanelStyles} p={{ base: '8', md: '12' }} boxShadow="0 30px 60px -12px rgba(0,0,0,0.5)">
               <VStack gap="2" textAlign="center" mb="8">
-                <Heading as="h2" fontSize="40px">{t.formTitle}</Heading>
-                <Text color={isDarkMode ? "brand.onSurfaceVariant" : "gray.600"}>{t.formDesc}</Text>
+                <Heading as="h2" fontSize="40px" lineHeight="1.2">{t.formTitle}</Heading>
+                <Text color={isDarkMode ? "brand.onSurfaceVariant" : "gray.600"} fontSize="15px" lineHeight="1.5">{t.formDesc}</Text>
               </VStack>
 
               <form onSubmit={handleRegisterSubmit}>
                 <VStack gap="5" align="stretch">
                   <SimpleGrid columns={{ base: 1, md: 2 }} gap="5" w="full">
                     <Field.Root required>
-                      <Field.Label fontSize="12px" fontFamily="mono" opacity="0.6">{t.labelName}</Field.Label>
+                      <Field.Label fontSize="12px" fontFamily="mono" opacity="0.6" lineHeight="1.5">{t.labelName}</Field.Label>
                       <Input
                         bg={isDarkMode ? "brand.surface" : "white"}
                         border="1px solid rgba(255,255,255,0.1)"
@@ -600,7 +604,7 @@ export default function HackathonLandingPage() {
                     </Field.Root>
 
                     <Field.Root required>
-                      <Field.Label fontSize="12px" fontFamily="mono" opacity="0.6">{t.labelEmail}</Field.Label>
+                      <Field.Label fontSize="12px" fontFamily="mono" opacity="0.6" lineHeight="1.5">{t.labelEmail}</Field.Label>
                       <Input
                         type="email"
                         bg={isDarkMode ? "brand.surface" : "white"}
@@ -617,7 +621,7 @@ export default function HackathonLandingPage() {
                   </SimpleGrid>
 
                   <Field.Root required>
-                    <Field.Label fontSize="12px" fontFamily="mono" opacity="0.6">{t.labelInstitute}</Field.Label>
+                    <Field.Label fontSize="12px" fontFamily="mono" opacity="0.6" lineHeight="1.5">{t.labelInstitute}</Field.Label>
                     <Input
                       bg={isDarkMode ? "brand.surface" : "white"}
                       border="1px solid rgba(255,255,255,0.1)"
@@ -633,7 +637,7 @@ export default function HackathonLandingPage() {
 
                   <SimpleGrid columns={{ base: 1, md: 2 }} gap="5" w="full">
                     <Field.Root required>
-                      <Field.Label fontSize="12px" fontFamily="mono" opacity="0.6">{t.labelWhatsapp}</Field.Label>
+                      <Field.Label fontSize="12px" fontFamily="mono" opacity="0.6" lineHeight="1.5">{t.labelSandbox || t.labelWhatsapp}</Field.Label>
                       <Input
                         bg={isDarkMode ? "brand.surface" : "white"}
                         border="1px solid rgba(255,255,255,0.1)"
@@ -648,7 +652,7 @@ export default function HackathonLandingPage() {
                     </Field.Root>
 
                     <Field.Root>
-                      <Field.Label fontSize="12px" fontFamily="mono" opacity="0.6">{t.labelExp}</Field.Label>
+                      <Field.Label fontSize="12px" fontFamily="mono" opacity="0.6" lineHeight="1.5">{t.labelExp}</Field.Label>
                       <Select.Root 
                         collection={experienceLevels} 
                         size="md"
@@ -692,7 +696,7 @@ export default function HackathonLandingPage() {
                     </Field.Root>
                   </SimpleGrid>
 
-                  <Button type="submit" w="full" py="7" mt="4" bg="brand.primary" color="black" fontWeight="bold" fontFamily="mono" fontSize="12px" borderRadius="xl" _hover={{ boxShadow: '0 0 30px rgba(76, 215, 246, 0.4)' }}>
+                  <Button type="submit" w="full" py="7" mt="4" bg="brand.primary" color="black" fontWeight="bold" fontFamily="mono" fontSize="12px" borderRadius="xl" lineHeight="1.2" _hover={{ boxShadow: '0 0 30px rgba(76, 215, 246, 0.4)' }}>
                     {t.btnSubmit}
                   </Button>
                 </VStack>
@@ -705,8 +709,8 @@ export default function HackathonLandingPage() {
       {/* Footer */}
       <Box as="footer" bg={isDarkMode ? "brand.surfaceLow" : "gray.200"} borderTop={`1px solid ${glassBorder}`} py="8" w="full">
         <Flex flexDir={{ base: 'column', md: 'row' }} justify="space-between" align="center" maxW="1440px" mx="auto" px="6" gap="4">
-          <Text fontSize="16px" fontWeight="bold" color="brand.primary">ESOFT MONARAGALA — IT DEPT</Text>
-          <Text fontSize="12px" fontFamily="mono" opacity="0.6">© 2026 HACKFLOW HACKATHON. ALL RIGHTS RESERVED.</Text>
+          <Text fontSize="16px" fontWeight="bold" color="brand.primary" lineHeight="1.2">ESOFT MONARAGALA — IT DEPT</Text>
+          <Text fontSize="12px" fontFamily="mono" opacity="0.6" lineHeight="1.2">© 2026 HACKFLOW HACKATHON. ALL RIGHTS RESERVED.</Text>
         </Flex>
       </Box>
     </Box>
