@@ -588,7 +588,7 @@ export default function HackathonLandingPage() {
                 <Icon as={FiAward} color="yellow.400" w="14" h="14" filter="drop-shadow(0 0 10px rgba(234, 179, 8, 0.3))" mb="2" />
                 <Box>
                   <Text fontFamily="'JetBrains Mono', monospace" fontSize="12px" color="yellow.400" letterSpacing="widest" fontWeight="bold" lineHeight="1.5">{t.bento3Label}</Text>
-                  <Text fontSize="34px" fontWeight="900" color="yellow.500" bgClip="text" lineHeight="1.2" style={{ fontFamily: "'Space Grotesk', sans-serif" }}>Rs. 25,000</Text>
+                  <Text fontSize="34px" fontWeight="900" color="yellow.300" lineHeight="1.2" style={{ fontFamily: "'Space Grotesk', sans-serif" }}>Rs. 25,000</Text>
                 </Box>
                 <Text color={isDarkMode ? "whiteAlpha.600" : "gray.600"} fontSize="13px" lineHeight="1.5">{t.bento3Desc}</Text>
               </Flex>
