@@ -1433,7 +1433,7 @@ export default function HackathonLandingPage() {
 
                   <SimpleGrid columns={{ base: 1, md: 2 }} gap="5" w="full">
                     <Field.Root required>
-                      <Field.Label fontSize="12px" fontFamily="'JetBrains Mono', monospace" opacity="0.6" fontWeight="bold" lineHeight="1.5">{t.labelTriangle || t.labelWhatsapp}</Field.Label>
+                      <Field.Label fontSize="12px" fontFamily="'JetBrains Mono', monospace" opacity="0.6" fontWeight="bold" lineHeight="1.5">{t.labelWhatsapp}</Field.Label>
                       <Input
                         bg={isDarkMode ? "rgba(6, 9, 19, 0.5)" : "white"}
                         border="1px solid"
