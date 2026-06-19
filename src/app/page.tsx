@@ -25,7 +25,7 @@ import { FiCalendar, FiMapPin, FiAward, FiSun, FiMoon, FiMenu, FiX, FiDownload }
 import { toaster } from "@/components/ui/toaster";
 
 // ⚠️ ඔබ ලබාගත් Google Apps Script Web App URL එක මෙතැනට ඇතුළත් කරන්න
-const GOOGLE_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbzO2QOjfBfi3-HfLgCP9kPT-DDrDH-oUXnkgF64scCdJsPyyIuvze3E2exiWhnOEeHV8Q/exec";
+const GOOGLE_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbyCoIV6g6yDvXwfuvsQqDLbpL0mi3-3OvOd7L2pgFLlK7m0NwrU9YYtfyl8HXUTrEGTlA/exec";
 
 // Multi-language translation dictionaries
 const translations = {
@@ -301,7 +301,7 @@ export default function HackathonLandingPage() {
   // Handle Form Submission into Google Sheet Endpoint API
   const handleRegisterSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (GOOGLE_SCRIPT_URL === "https://script.google.com/macros/s/AKfycbzO2QOjfBfi3-HfLgCP9kPT-DDrDH-oUXnkgF64scCdJsPyyIuvze3E2exiWhnOEeHV8Q/exec") {
+    if (GOOGLE_SCRIPT_URL === "https://script.google.com/macros/s/AKfycbyCoIV6g6yDvXwfuvsQqDLbpL0mi3-3OvOd7L2pgFLlK7m0NwrU9YYtfyl8HXUTrEGTlA/exec") {
       toaster.create({
         title: "Configuration Error",
         description: "Please set your valid Google Apps Script Web App URL.",
