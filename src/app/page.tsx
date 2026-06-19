@@ -211,7 +211,7 @@ export default function HackathonLandingPage() {
 
   // Fetch Institutes List from Google Sheet
   useEffect(() => {
-    if (GOOGLE_SCRIPT_URL !== "https://script.google.com/macros/s/AKfycbzO2QOjfBfi3-HfLgCP9kPT-DDrDH-oUXnkgF64scCdJsPyyIuvze3E2exiWhnOEeHV8Q/exec") {
+    if (GOOGLE_SCRIPT_URL !== "https://script.google.com/macros/s/AKfycbyCoIV6g6yDvXwfuvsQqDLbpL0mi3-3OvOd7L2pgFLlK7m0NwrU9YYtfyl8HXUTrEGTlA/exec") {
       fetch(GOOGLE_SCRIPT_URL)
         .then((res) => res.json())
         .then((data) => {
